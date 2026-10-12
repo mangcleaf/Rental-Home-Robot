@@ -6,16 +6,14 @@ public abstract class Equipment {
     private String serialNumber;
     private String model;
     private String status;
-    private String manufacturer;
     private int year;
     private LocalDate warrantyExpDate;
     private int facilityId;
 
-    public Equipment(String serialNumber, String model, String status, String manufacturer, int year, LocalDate warrantyExpDate, int facilityId) {
+    public Equipment(String serialNumber, String model, String status, int year, LocalDate warrantyExpDate, int facilityId) {
         this.serialNumber = serialNumber;
         this.model = model;
         this.status = status;
-        this.manufacturer = manufacturer;
         this.year = year;
         this.warrantyExpDate = warrantyExpDate;
         this.facilityId = facilityId;
@@ -53,14 +51,6 @@ public abstract class Equipment {
         this.status = status;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
     public int getYear() {
         return year;
     }
@@ -90,7 +80,6 @@ public abstract class Equipment {
         + "\nSerial Number: " + serialNumber
         + "\nModel: " + model
         + "\nStatus: " + status
-        + "\nManufacturer: " + manufacturer
         + "\nYear: " + year
         + "\nWarranty Expiration Date: " + warrantyExpDate
         + "\nFacility ID: " + facilityId;

@@ -7,11 +7,11 @@ public class Robot extends Equipment {
     private String sensorSuite;
     private String primaryFunction;
 
-    public Robot(String serialNumber, String model, String status, String manufacturer,
+    public Robot(String serialNumber, String model, String status,
                 int year, LocalDate warrantyExpDate, int facilityId, String name,
                 int batteryAutonomy, String sensorSuite, String primaryFunction) {
 
-        super(serialNumber, model, status, manufacturer, year, warrantyExpDate, facilityId);
+        super(serialNumber, model, status, year, warrantyExpDate, facilityId);
         this.name = name;
         this.batteryAutonomy = batteryAutonomy;
         this.sensorSuite = sensorSuite;
