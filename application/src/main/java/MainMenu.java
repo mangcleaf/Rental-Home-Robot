@@ -1,36 +1,30 @@
 import java.util.Scanner;
 
+import EntityManager.CustomerManager;
+import MenuOptions.CustomerMenu;
+
 public class MainMenu {
-    public static void clearConsole(){
+    private Scanner scanner;
+    private CustomerManager customerManager;
+
+
+    public MainMenu(Scanner scanner, CustomerManager customerManager){
+        this.scanner = scanner;
+        this.customerManager = customerManager;
+    }
+    
+    private void clearConsole(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    public static int getResponse(Scanner in, int validChoice) {
-        int return_value;
-        String response = null;
-
-        while(true){
-            response = in.nextLine();
-
-            try {
-                return_value = Integer.parseInt(response);
-
-                if (return_value < 0 || return_value > validChoice) {
-                    System.out.print("Please enter a valid choice: ");
-                } else {
-                    break;
-                }
-
-            } catch (NumberFormatException e){
-                System.out.print("Please enter a valid choice: ");
-            }
-        }
-
-        return return_value;
+    private void pause(){
+        System.out.println("Press [ENTER] to go back.");
+        scanner.nextLine();
+        clearConsole();
     }
 
-    public static void printMenuOptions() {
+    private void printMenu(){
         clearConsole();
 
         System.out.println("Rental Home Robot System");
@@ -43,18 +37,49 @@ public class MainMenu {
         System.out.println("0. Exit");
 
         System.out.println("");
-        System.out.print("Please enter your choice: ");
     }
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+    public void display() {
+        int choice = -1;
+        String response = null;
 
-        printMenuOptions();
-        getResponse(in, 4);
+        while (true){
+            printMenu();
 
+            System.out.print("Please enter your choice: ");
+            response = scanner.nextLine();
 
-        System.out.println("");
+            try{
+                choice = Integer.parseInt(response);
+            } catch (NumberFormatException e) {
+                continue;
+            }
 
-        in.close();
+            switch (choice) {
+                case 1:
+                    CustomerMenu customerMenu = new CustomerMenu(scanner, customerManager);
+                    customerMenu.display();
+                    break;
+                case 2:
+                    System.out.println("");
+                    System.out.println("Robot Menu Underdevelopment");
+                    pause();
+                    break;
+                case 3:
+                    System.out.println("");
+                    System.out.println("Driverless Car Menu Underdevelopment");
+                    pause();
+                    break;
+                case 4:
+                    System.out.println("");
+                    System.out.println("Rental Underdevelopment");
+                    pause();
+                    break;
+                case 0:
+                    System.out.println("");
+                    System.out.println("Exiting...");
+                    return;
+            }
+        }
     }
 }
