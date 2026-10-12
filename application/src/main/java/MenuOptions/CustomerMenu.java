@@ -27,7 +27,7 @@ public class CustomerMenu {
     }
 
     private Integer readInt(String prompt){
-        System.out.println(prompt);
+        System.out.print(prompt);
 
         try{
             return Integer.parseInt(scanner.nextLine());
@@ -187,7 +187,6 @@ public class CustomerMenu {
         pause();
     }
 
-
     private void printMenu(){
         clearConsole();
 
@@ -199,7 +198,7 @@ public class CustomerMenu {
         System.out.println("3. Delete Customer");
         System.out.println("4. Search for Customer");
         System.out.println("5. Display Customers");
-        System.out.println("0. Exit");
+        System.out.println("0. Back");
 
         System.out.println("");
     }

@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import EntityManager.CustomerManager;
 import MenuOptions.CustomerMenu;
+import MenuOptions.RentalMenu;
 
 public class MainMenu {
     private Scanner scanner;
@@ -26,7 +27,7 @@ public class MainMenu {
     }
 
     private Integer readInt(String prompt){
-        System.out.println(prompt);
+        System.out.print(prompt);
 
         try{
             return Integer.parseInt(scanner.nextLine());
@@ -73,9 +74,8 @@ public class MainMenu {
                     pause();
                     break;
                 case 4:
-                    System.out.println("");
-                    System.out.println("Rental Underdevelopment");
-                    pause();
+                    RentalMenu rentalMenu = new RentalMenu(scanner);
+                    rentalMenu.display();
                     break;
                 case 0:
                     System.out.println("");
