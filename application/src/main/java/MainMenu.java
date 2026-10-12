@@ -19,6 +19,7 @@ public class MainMenu {
     }
 
     private void pause(){
+        System.out.println("");
         System.out.println("Press [ENTER] to go back.");
         scanner.nextLine();
         clearConsole();
