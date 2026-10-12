@@ -25,6 +25,17 @@ public class MainMenu {
         clearConsole();
     }
 
+    private Integer readInt(String prompt){
+        System.out.println(prompt);
+
+        try{
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e){
+            System.out.println("Invalid Number!!!");
+            return null;
+        }
+    }
+
     private void printMenu(){
         clearConsole();
 
@@ -41,20 +52,10 @@ public class MainMenu {
     }
 
     public void display() {
-        int choice = -1;
-        String response = null;
-
         while (true){
             printMenu();
 
-            System.out.print("Please enter your choice: ");
-            response = scanner.nextLine();
-
-            try{
-                choice = Integer.parseInt(response);
-            } catch (NumberFormatException e) {
-                continue;
-            }
+            int choice = readInt("Please enter your choice: ");
 
             switch (choice) {
                 case 1:
