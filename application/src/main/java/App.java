@@ -1,5 +1,3 @@
-package cse3241;
-
 /**
  * Hello world!
  *
