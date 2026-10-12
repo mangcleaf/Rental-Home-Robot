@@ -1,5 +1,3 @@
-package cse3241;
-
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;

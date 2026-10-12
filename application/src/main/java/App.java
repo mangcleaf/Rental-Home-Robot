@@ -1,13 +1,19 @@
-package cse3241;
+import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
+import EntityManager.CustomerManager;
+
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        Scanner scanner = new Scanner(System.in);
+                
+        CustomerManager customerManager = new CustomerManager();
+
+
+        MainMenu menu = new MainMenu(scanner, customerManager);
+        menu.display();
+
+        scanner.close();
     }
 }

@@ -12,7 +12,7 @@ public class Customer {
     private int facilityId;
 
 
-    public Customer(int userId, String firstName, String lastName, String address, String phone, 
+    public Customer(String firstName, String lastName, String address, String phone, 
         String email, LocalDate startDate, int facilityId) {
             this.firstName = firstName;
             this.lastName = lastName;
@@ -100,5 +100,4 @@ public class Customer {
              + "\nStart Date: " + startDate
              + "\nFacility ID: " + facilityId;
     }
-    
 }
