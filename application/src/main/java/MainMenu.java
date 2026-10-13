@@ -1,17 +1,21 @@
 import java.util.Scanner;
 
 import EntityManager.CustomerManager;
+import EntityManager.RobotManager;
 import MenuOptions.CustomerMenu;
 import MenuOptions.RentalMenu;
+import MenuOptions.RobotMenu;
 
 public class MainMenu {
     private Scanner scanner;
     private CustomerManager customerManager;
+    private RobotManager robotManager;
 
 
-    public MainMenu(Scanner scanner, CustomerManager customerManager){
+    public MainMenu(Scanner scanner, CustomerManager customerManager, RobotManager robotManager){
         this.scanner = scanner;
         this.customerManager = customerManager;
+        this.robotManager = robotManager;
     }
     
     private void clearConsole(){
@@ -64,9 +68,8 @@ public class MainMenu {
                     customerMenu.display();
                     break;
                 case 2:
-                    System.out.println("");
-                    System.out.println("Robot Menu Underdevelopment");
-                    pause();
+                    RobotMenu robotMenu = new RobotMenu(scanner, robotManager);
+                    robotMenu.display();
                     break;
                 case 3:
                     System.out.println("");

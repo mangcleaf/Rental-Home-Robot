@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 import EntityManager.CustomerManager;
+import EntityManager.RobotManager;
 
 public class App 
 {
@@ -9,6 +10,7 @@ public class App
         Scanner scanner = new Scanner(System.in);
                 
         CustomerManager customerManager = new CustomerManager();
+        RobotManager robotManager = new RobotManager();
 
 
         MainMenu menu = new MainMenu(scanner, customerManager);
