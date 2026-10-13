@@ -20,12 +20,24 @@ public class CustomerMenu {
     }
 
     private void pause(){
+        System.out.println("");
         System.out.println("Press [ENTER] to go back.");
         scanner.nextLine();
         clearConsole();
     }
 
-    private void addCustomer(){
+    private Integer readInt(String prompt){
+        System.out.print(prompt);
+
+        try{
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e){
+            System.out.println("Invalid Number!!!");
+            return null;
+        }
+    }
+
+    private void addCustomerMenu(){
         clearConsole();
 
         System.out.println("Add Customer");
@@ -52,15 +64,133 @@ public class CustomerMenu {
 
         LocalDate startDate = LocalDate.now();
 
+        Customer customer = customerManager.addCustomer(fName, lName, address, phone, email, startDate, facilityId);
 
-        Customer customer = new Customer(fName, lName, address, phone, email, startDate, facilityId);
-
-        customerManager.addCustomer(customer);
-
+        System.out.println("");
         System.out.println("Customer Added!!!");
+        System.out.println("User ID: " + customer.getUserId());
+
         pause();
     }
 
+    private void editCustomerMenu(){
+        clearConsole();
+
+        System.out.println("Edit Customer");
+        System.out.println("");
+
+        int id = readInt("Please enter User ID to edit: ");
+
+        Customer customer = customerManager.getCustomerById(id);
+
+        if (customer == null){
+            System.out.println("Customer Not Found!!!");
+            pause();
+            return;
+        }
+
+        while (true) {
+            clearConsole();
+
+            System.out.println("Edit Customer");
+            System.out.println("");
+            System.out.println(customer);
+            System.out.println("");
+
+            System.out.println("1. Edit First Name");
+            System.out.println("2. Edit Last Name");
+            System.out.println("3. Edit Address");
+            System.out.println("4. Edit Phone");
+            System.out.println("5. Edit Email");
+            System.out.println("0. Back");
+            System.out.println("");
+
+            int choice = readInt("Please enter your choice: ");
+
+            switch (choice) {
+                case 0:
+                    return;
+            
+                case 1, 2, 3, 4, 5:
+                    System.out.print("Enter new value: ");
+                    String newValue = scanner.nextLine();
+            
+                    boolean updated = customerManager.editCustomer(
+                        id, choice, newValue);
+            
+                    if (updated) {
+                        System.out.println("Customer Updated!!!");
+                    } else {
+                        System.out.println("Error Updating Customer!!!");
+                    }
+                    break;
+            
+                default:
+                    System.out.println("Invalid Choice!!!");
+                    break;
+            }
+            
+            pause();
+        }
+    }
+
+    private void deleteCustomerMenu(){
+        clearConsole();
+
+        System.out.println("Delete Customer");
+        System.out.println("");
+
+        int id = readInt("Please enter Customer to delete: ");
+
+        boolean deleteResult = customerManager.deleteCustomer(id);
+
+        System.out.println("");
+        if(deleteResult){
+            System.out.println("Customer Deleted!!!");
+        } else {
+            System.out.println("Error Deleting Customer!!!");
+        }
+
+        pause();
+    } 
+
+    private void searchCustomerMenu(){
+        clearConsole();
+
+        System.out.println("Search Customers");
+        System.out.println("");
+
+        int id = readInt("Please enter the User ID to find: ");
+
+        Customer customer = customerManager.getCustomerById(id);
+
+        System.out.println("");
+        if(customer != null){
+            System.out.println(customer);
+        } else {
+            System.out.println("Error Finding Customer!!!");
+        }
+
+        pause();
+    } 
+
+    private void displayCustomersMenu(){
+        clearConsole();
+
+        System.out.println("All Customers");
+        System.out.println("");
+
+        if (customerManager.getCustomers().isEmpty()){
+            System.out.println(("No Customers Found!!!"));
+        } else{
+            for (Customer customer : customerManager.getCustomers()) {
+                System.out.println(customer);
+                System.out.println();
+            }
+        }
+
+        pause();
+    }
 
     private void printMenu(){
         clearConsole();
@@ -71,40 +201,34 @@ public class CustomerMenu {
         System.out.println("1. Add Customer");
         System.out.println("2. Edit Customer");
         System.out.println("3. Delete Customer");
-        System.out.println("4. Display Customers");
+        System.out.println("4. Search for Customer");
         System.out.println("5. Display Customers");
-
-        System.out.println("0. Exit");
+        System.out.println("0. Back");
 
         System.out.println("");
     }
 
     public void display() {
-        int choice = -1;
-        String response = null;
-
         while (true){
             printMenu();
-
-            System.out.print("Please enter your choice: ");
-            response = scanner.nextLine();
-
-            try{
-                choice = Integer.parseInt(response);
-            } catch (NumberFormatException e) {
-                continue;
-            }
+            
+            int choice = readInt("Please enter your choice: ");
 
             switch (choice) {
                 case 1:
-                    System.out.println("Add Customer");
-                    addCustomer();
+                    addCustomerMenu();
                     break;
                 case 2:
-                    System.out.println("Edit Customer");
+                    editCustomerMenu();
                     break;
                 case 3:
-                    System.out.println("Delete Customer");
+                    deleteCustomerMenu();
+                    break;
+                case 4:
+                    searchCustomerMenu();
+                    break;
+                case 5:
+                    displayCustomersMenu();
                     break;
                 case 0:
                     return;

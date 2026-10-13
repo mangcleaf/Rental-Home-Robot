@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 import EntityManager.CustomerManager;
 import MenuOptions.CustomerMenu;
+import MenuOptions.RentalMenu;
 
 public class MainMenu {
     private Scanner scanner;
@@ -19,9 +20,21 @@ public class MainMenu {
     }
 
     private void pause(){
+        System.out.println("");
         System.out.println("Press [ENTER] to go back.");
         scanner.nextLine();
         clearConsole();
+    }
+
+    private Integer readInt(String prompt){
+        System.out.print(prompt);
+
+        try{
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e){
+            System.out.println("Invalid Number!!!");
+            return null;
+        }
     }
 
     private void printMenu(){
@@ -40,20 +53,10 @@ public class MainMenu {
     }
 
     public void display() {
-        int choice = -1;
-        String response = null;
-
         while (true){
             printMenu();
 
-            System.out.print("Please enter your choice: ");
-            response = scanner.nextLine();
-
-            try{
-                choice = Integer.parseInt(response);
-            } catch (NumberFormatException e) {
-                continue;
-            }
+            int choice = readInt("Please enter your choice: ");
 
             switch (choice) {
                 case 1:
@@ -71,9 +74,8 @@ public class MainMenu {
                     pause();
                     break;
                 case 4:
-                    System.out.println("");
-                    System.out.println("Rental Underdevelopment");
-                    pause();
+                    RentalMenu rentalMenu = new RentalMenu(scanner);
+                    rentalMenu.display();
                     break;
                 case 0:
                     System.out.println("");
