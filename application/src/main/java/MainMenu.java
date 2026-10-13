@@ -51,6 +51,7 @@ public class MainMenu {
         System.out.println("2. Manage Robot");
         System.out.println("3. Manage Driverless Car");
         System.out.println("4. Manage Rental");
+        System.out.println("5. Useful Reports");
         System.out.println("0. Exit");
 
         System.out.println("");
@@ -73,12 +74,15 @@ public class MainMenu {
                     break;
                 case 3:
                     System.out.println("");
-                    System.out.println("Driverless Car Menu Underdevelopment");
+                    System.out.println("Driverless Car Menu Under development");
                     pause();
                     break;
                 case 4:
                     RentalMenu rentalMenu = new RentalMenu(scanner);
                     rentalMenu.display();
+                    break;
+                case 5:
+                    System.out.println("** This section will be implemented later **");
                     break;
                 case 0:
                     System.out.println("");

@@ -13,7 +13,7 @@ public class App
         RobotManager robotManager = new RobotManager();
 
 
-        MainMenu menu = new MainMenu(scanner, customerManager);
+        MainMenu menu = new MainMenu(scanner, customerManager, robotManager);
         menu.display();
 
         scanner.close();
