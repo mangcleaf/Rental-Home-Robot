@@ -1,11 +1,21 @@
-/**
- * Hello world!
- *
- */
+import java.util.Scanner;
+
+import EntityManager.CustomerManager;
+import EntityManager.RobotManager;
+
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        Scanner scanner = new Scanner(System.in);
+                
+        CustomerManager customerManager = new CustomerManager();
+        RobotManager robotManager = new RobotManager();
+
+
+        MainMenu menu = new MainMenu(scanner, customerManager, robotManager);
+        menu.display();
+
+        scanner.close();
     }
 }
