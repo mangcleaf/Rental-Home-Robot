@@ -2,6 +2,7 @@ package MenuOptions;
 
 import java.util.Scanner;
 import java.time.LocalDate;
+
 import Entity.Customer;
 import EntityManager.CustomerManager;
 
@@ -27,13 +28,14 @@ public class CustomerMenu {
     }
 
     private Integer readInt(String prompt){
-        System.out.print(prompt);
+        while (true) {
+            System.out.print(prompt);
 
-        try{
-            return Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e){
-            System.out.println("Invalid Number!!!");
-            return null;
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Number!!! Try again");
+            }
         }
     }
 
@@ -58,9 +60,7 @@ public class CustomerMenu {
         System.out.print("Please Enter Customer's Email: ");
         String email = scanner.nextLine();
 
-        System.out.print("Please Enter Customer's Facility ID: ");
-        int facilityId = scanner.nextInt();
-        scanner.nextLine();
+        int facilityId = readInt("Please Enter Customer's Facility ID: ");
 
         LocalDate startDate = LocalDate.now();
 

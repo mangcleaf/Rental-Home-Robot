@@ -29,7 +29,7 @@ public class RobotMenu {
 
     private Integer readInt(String prompt) {
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt);
             try {
                 return Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
@@ -40,7 +40,7 @@ public class RobotMenu {
 
     private LocalDate readDate(String prompt) {
         while (true) {
-            System.out.println(prompt);
+            System.out.print(prompt);
             try {
                 return LocalDate.parse(scanner.nextLine());
             } catch (DateTimeParseException e) {
@@ -62,14 +62,14 @@ public class RobotMenu {
 
         int year = readInt("Please Enter the Year: ");
 
-        LocalDate warrantyExpDate = readDate("Please Enter Warranty Expiration Date (YYYY-MM-DD)");
+        LocalDate warrantyExpDate = readDate("Please Enter Warranty Expiration Date (YYYY-MM-DD): ");
 
         int facilityId = readInt("Please Enter Facility ID: ");
 
         System.out.print("Please Enter Robot Name: ");
         String name = scanner.nextLine();
 
-        int battery = readInt("Please Enter Battery Autonomy");
+        int battery = readInt("Please Enter Battery Autonomy: ");
 
         System.out.print("Please Enter Sensor Suite: ");
         String sensorSuite = scanner.nextLine();
@@ -205,6 +205,8 @@ public class RobotMenu {
 
 
     private void printMenu() {
+        clearConsole();
+
         System.out.println("Robot Management\n");
 
         System.out.println("1. Add Robot");
