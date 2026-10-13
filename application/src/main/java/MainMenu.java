@@ -61,7 +61,7 @@ public class MainMenu {
         while (true){
             printMenu();
 
-            int choice = readInt("Please enter your choice: ");
+            Integer choice = readInt("Please enter your choice: ");
 
             switch (choice) {
                 case 1:
@@ -74,7 +74,7 @@ public class MainMenu {
                     break;
                 case 3:
                     System.out.println("");
-                    System.out.println("Driverless Car Menu Under development");
+                    System.out.println("Driverless Car Menu Underdevelopment");
                     pause();
                     break;
                 case 4:

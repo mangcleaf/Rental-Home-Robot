@@ -38,21 +38,21 @@ public class RentalMenu {
         System.out.println("Schedule Robot Pickup");
         System.out.println("");
 
-        int ID = readInt("Please enter Customer ID: ");
+        Integer id = readInt("Please enter Customer ID: ");
 
         System.out.println("");
         System.out.println("Active Rentals: ");
         System.out.println("...");
         System.out.println("");
 
-        int selectedRental = readInt("Please enter Rental ID: ");
+        Integer selectedRental = readInt("Please enter Rental ID: ");
 
         System.out.println("");
         System.out.println("Available Driverless Cars: ");
         System.out.println("...");
         System.out.println("");
 
-        int selectedCar = readInt("Please enter Car Equipment ID: ");
+        Integer selectedCar = readInt("Please enter Car Equipment ID: ");
 
         System.out.println("");
         System.out.print("Please enter Pickup Date: ");
@@ -83,7 +83,7 @@ public class RentalMenu {
         while (true) {
             printMenu();
             
-            int choice = readInt("Please enter your choice: ");
+            Integer choice = readInt("Please enter your choice: ");
 
             switch (choice) {
                 case 1:

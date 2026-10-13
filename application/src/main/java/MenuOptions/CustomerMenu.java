@@ -79,7 +79,7 @@ public class CustomerMenu {
         System.out.println("Edit Customer");
         System.out.println("");
 
-        int id = readInt("Please enter User ID to edit: ");
+        Integer id = readInt("Please enter User ID to edit: ");
 
         Customer customer = customerManager.getCustomerById(id);
 
@@ -105,7 +105,7 @@ public class CustomerMenu {
             System.out.println("0. Back");
             System.out.println("");
 
-            int choice = readInt("Please enter your choice: ");
+            Integer choice = readInt("Please enter your choice: ");
 
             switch (choice) {
                 case 0:
@@ -140,7 +140,7 @@ public class CustomerMenu {
         System.out.println("Delete Customer");
         System.out.println("");
 
-        int id = readInt("Please enter Customer to delete: ");
+        Integer id = readInt("Please enter Customer to delete: ");
 
         boolean deleteResult = customerManager.deleteCustomer(id);
 
@@ -160,7 +160,7 @@ public class CustomerMenu {
         System.out.println("Search Customers");
         System.out.println("");
 
-        int id = readInt("Please enter the User ID to find: ");
+        Integer id = readInt("Please enter the User ID to find: ");
 
         Customer customer = customerManager.getCustomerById(id);
 
@@ -212,7 +212,7 @@ public class CustomerMenu {
         while (true){
             printMenu();
             
-            int choice = readInt("Please enter your choice: ");
+            Integer choice = readInt("Please enter your choice: ");
 
             switch (choice) {
                 case 1:

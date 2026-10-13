@@ -86,7 +86,7 @@ public class RobotMenu {
 
         System.out.println("Edit Robot\n");
 
-        int id = readInt("Please enter Robot ID to edit: ");
+        Integer id = readInt("Please enter Robot ID to edit: ");
 
         Robot robot = robotManager.getRobotById(id);
 
@@ -112,7 +112,7 @@ public class RobotMenu {
             System.out.println("7. Edit Primary Function");
             System.out.println("0. Back\n");
 
-            int choice = readInt("Please enter your choice: ");
+            Integer choice = readInt("Please enter your choice: ");
 
             switch (choice) {
                 case 0:
@@ -147,7 +147,7 @@ public class RobotMenu {
 
         System.out.println("Delete Robot\n");
 
-        int id = readInt("Please enter the robot to delete: ");
+        Integer id = readInt("Please enter the robot to delete: ");
 
         boolean deleteResult = robotManager.deleteRobot(id);
 
@@ -167,7 +167,7 @@ public class RobotMenu {
 
         System.out.println("Search Robots\n");
 
-        int id = readInt("Please enter the Robot ID to find: ");
+        Integer id = readInt("Please enter the Robot ID to find: ");
 
         Robot robot = robotManager.getRobotById(id);
 
@@ -215,7 +215,7 @@ public class RobotMenu {
         while (true) {
             printMenu();
 
-            int choice = readInt("Please enter your choice: ");
+            Integer choice = readInt("Please enter your choice: ");
 
             switch (choice) {
                 case 1:
