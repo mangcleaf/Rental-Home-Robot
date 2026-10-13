@@ -101,6 +101,8 @@ public class RentalMenu {
                 case 4:
                     schedulePickup();
                     break;
+                case 0: 
+                    return;
                 default:
                     break;
             }

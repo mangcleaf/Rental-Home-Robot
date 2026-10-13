@@ -83,6 +83,7 @@ public class MainMenu {
                     break;
                 case 5:
                     System.out.println("** This section will be implemented later **");
+                    pause();
                     break;
                 case 0:
                     System.out.println("");

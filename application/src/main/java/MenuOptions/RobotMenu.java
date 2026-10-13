@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import Entity.Robot;
 import EntityManager.RobotManager;
+import java.time.format.DateTimeParseException;
 
 
 public class RobotMenu {
@@ -27,13 +28,24 @@ public class RobotMenu {
     }
 
     private Integer readInt(String prompt) {
-        System.out.println(prompt);
+        while (true) {
+            System.out.println(prompt);
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Number. Try again");
+            }
+        }
+    }
 
-        try {
-            return Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid Number.");
-            return null;
+    private LocalDate readDate(String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            try {
+                return LocalDate.parse(scanner.nextLine());
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date. Use YYYY-MM-DD");
+            }
         }
     }
 
@@ -48,23 +60,16 @@ public class RobotMenu {
         System.out.print("Please Enter Model: ");
         String model = scanner.nextLine();
 
-        System.out.print("Please Enter the Year: ");
-        int year = scanner.nextInt();
-        scanner.nextLine();
+        int year = readInt("Please Enter the Year: ");
 
-        System.out.print("Please Enter Warranty Expiration Date (YYYY-MM-DD): ");
-        LocalDate warrantyExpDate = LocalDate.parse(scanner.nextLine());
+        LocalDate warrantyExpDate = readDate("Please Enter Warranty Expiration Date (YYYY-MM-DD)");
 
-        System.out.print("Please Enter Facility ID: ");
-        int facilityId = scanner.nextInt();
-        scanner.nextLine();
+        int facilityId = readInt("Please Enter Facility ID: ");
 
         System.out.print("Please Enter Robot Name: ");
         String name = scanner.nextLine();
 
-        System.out.print("Please Enter Battery Autonomy: ");
-        int battery = scanner.nextInt();
-        scanner.nextLine();
+        int battery = readInt("Please Enter Battery Autonomy");
 
         System.out.print("Please Enter Sensor Suite: ");
         String sensorSuite = scanner.nextLine();
