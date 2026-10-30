@@ -1,8 +1,8 @@
 CREATE TABLE Facility (
     FacilityID              INT		        NOT NULL,
     City                    VARCHAR (15),
-    Address 		        VARCHAR (30),
-    Phone 		            VARCHAR (15),
+    Address 		        VARCHAR (30)    NOT NULL                        UNIQUE,
+    Phone 		            VARCHAR (15)    NOT NULL                        UNIQUE,
     RobotCapacity 	        INT 		    CHECK(RobotCapacity >= 0),
     VehicleCapacity 	    INT 		    CHECK(VehicleCapacity >= 0),
     
@@ -23,8 +23,8 @@ CREATE TABLE EquipmentModel (
 CREATE TABLE Equipment (
     EquipmentID             INT             NOT NULL,
     SerialNumber            VARCHAR(30)     NOT NULL    UNIQUE,
-    Model                   VARCHAR(15),
-    Status                  VARCHAR(20),
+    Model                   VARCHAR(15)     ,
+    Status                  VARCHAR(15),
     Year                    INT,
     WarrantyExpirationDate  DATE,
     FacilityID              INT,
@@ -73,35 +73,252 @@ CREATE TABLE DriverlessCar(
 CREATE TABLE CustomerFacilityDistance (
     Address                 VARCHAR (30)        NOT NULL,
     FacilityID              INT                 NOT NULL,
-    FacilityDistance        DECIMAL (10,2),
+    FacilityDistance        DECIMAL (10,2)      CHECK(FacilityDistance >= 0),
 
     PRIMARY KEY (
         Address,
-        FacilityID,
-    )
-
+        FacilityID
+    ),
     FOREIGN KEY (
         FacilityID
     ) REFERENCES Facility(FacilityID)
 );
 
 CREATE TABLE Customer (
-    UserId                  INT             NOT NULL,
+    UserID                  INT             NOT NULL,
     FirstName               VARCHAR (15)    NOT NULL,
     LastName                VARCHAR (15)    NOT NULL,
-    Address                 VARCHAR (30),
-    Phone                   VARCHAR (15)    UNIQUE,
-    Email                   VARCHAR (30)    UNIQUE,
+    Address                 VARCHAR (30)    NOT NULL,
+    Phone                   VARCHAR (15)    NOT NULL        UNIQUE,
+    Email                   VARCHAR (30)    NOT NULL        UNIQUE,
     StartDate               DATE,
-    FacilityID              INT,      
+    FacilityID              INT             NOT NULL,      
 
     PRIMARY KEY (
-        UserId
+        UserID
     ),
     FOREIGN KEY (
-        Address
-    ) REFERENCES CustomerFacilityDistance(Address),
+        Address,
+        FacilityID
+    ) REFERENCES CustomerFacilityDistance(Address, FacilityID)
+);
+
+CREATE TABLE Staff(
+    SSN             VARCHAR (9)         NOT NULL,
+    FirstName       VARCHAR (15),
+    LastName        VARCHAR (15),
+    Phone           VARCHAR (15)        NOT NULL        UNIQUE,
+    Email           VARCHAR (30)        NOT NULL        UNIQUE,
+    FacilityID      INT,
+
+    PRIMARY KEY (
+        SSN
+    ),
     FOREIGN KEY (
         FacilityID
     ) REFERENCES Facility(FacilityID)
 );
+
+CREATE TABLE Supervisor (
+    SSN             VARCHAR (9)         NOT NULL,
+
+    PRIMARY KEY (
+        SSN
+    ),
+    FOREIGN KEY (
+        SSN
+    ) REFERENCES Staff(SSN)
+);
+
+CREATE TABLE Manager (
+    SSN             VARCHAR (9)         NOT NULL,
+    FacilityID      INT                 NOT NULL,
+
+    PRIMARY KEY (
+        SSN
+    ),
+    FOREIGN KEY (
+        SSN
+    ) REFERENCES Staff(SSN),
+    FOREIGN KEY (
+        FacilityID
+    ) REFERENCES Facility(FacilityID)
+);
+
+CREATE TABLE Rental (
+    RentalID            INT                 NOT NULL,
+    CheckoutDate        DATE,
+    DueDate             DATE,
+    ReturnDate          DATE,
+    RentalFees          DECIMAL (10, 2)     CHECK (RentalFees >= 0),
+    CustomerID          INT                 NOT NULL,
+    RobotEquipmentID    INT                 NOT NULL,
+
+    PRIMARY KEY (
+        RentalID
+    ),
+    FOREIGN KEY (
+        CustomerID
+    ) REFERENCES Customer(UserID),
+    FOREIGN KEY (
+        RobotEquipmentID
+    ) REFERENCES Robot(EquipmentID)
+);
+
+CREATE TABLE FacilityOrders (
+    OrderID             INT         NOT NULL,
+    FacilityID          INT         NOT NULL,
+    OrderDate           DATE,
+    OrderStatus         VARCHAR (15),
+
+    PRIMARY KEY (
+        OrderID
+    ),
+    FOREIGN KEY (
+        FacilityID
+    ) REFERENCES Facility(FacilityID)
+);
+
+CREATE TABLE OrderItems(
+    ItemID              INT         NOT NULL,
+    OrderID             INT         NOT NULL,
+    EquipmentID         INT         NOT NULL,
+
+    PRIMARY KEY (
+        ItemID
+    ),
+    FOREIGN KEY (
+        OrderID
+    ) REFERENCES FacilityOrders(OrderID),
+    FOREIGN KEY (
+        EquipmentID
+    ) REFERENCES Equipment(EquipmentID)
+);
+
+CREATE TABLE DeliveryPickup (
+    DeliveryPickupID            INT             NOT NULL,
+    RentalID                    INT             NOT NULL,
+    CarEquipmentID              INT             NOT NULL,
+    Type                        VARCHAR (8)     CHECK (Type IN ('Delivery', 'Pickup'))      NOT NULL,
+    Date                        DATE,
+    Status                      VARCHAR (15),
+
+    PRIMARY KEY (
+        DeliveryPickupID
+    ),
+    FOREIGN KEY (
+        RentalID
+    ) REFERENCES Rental(RentalID),
+    FOREIGN KEY (
+        CarEquipmentID
+    ) REFERENCES DriverlessCar(EquipmentID)
+);
+
+CREATE TABLE Readiness(
+    ReadinessID                     INT             NOT NULL,
+    SupervisorSSN                   VARCHAR (9)     NOT NULL,
+    DoorClearance                   BOOLEAN,
+    WiFiConnection                  BOOLEAN,
+    ElectricalSystemCapacity        BOOLEAN,
+    PrivacyZones                    BOOLEAN,
+    EnvironmentalMapping            BOOLEAN,
+    RobotCapability                 BOOLEAN,
+    EmotionalReadiness              BOOLEAN,
+    RentalID                        INT             NOT NULL    UNIQUE,
+
+    PRIMARY KEY (
+        ReadinessID
+    ),
+    FOREIGN KEY (
+        SupervisorSSN
+    ) REFERENCES Supervisor(SSN),
+    FOREIGN KEY (
+        RentalID
+    ) REFERENCES Rental(RentalID)
+);
+
+CREATE TABLE Reviews (
+    ReviewID                INT         NOT NULL,
+    Comments                TEXT,
+    Rating                  INT         CHECK (Rating >= 1 AND Rating <= 5),
+    CustomerID              INT         NOT NULL,
+    EquipmentID             INT         NOT NULL,
+
+    PRIMARY KEY (
+        ReviewID
+    ),
+    FOREIGN KEY (
+        CustomerID
+    ) REFERENCES Customer(UserID),
+    FOREIGN KEY (
+        EquipmentID
+    ) REFERENCES Equipment(EquipmentID)
+);
+
+CREATE TABLE Maintenance (
+    MaintenanceID               INT             NOT NULL,
+    Type                        VARCHAR (30),
+    DateIn                      DATE            NOT NULL,
+    DateOut                     DATE            NOT NULL,
+    Description                 TEXT,
+    EquipmentID                 INT             NOT NULL,
+
+    PRIMARY KEY (
+        MaintenanceID
+    ),
+    FOREIGN KEY (
+        EquipmentID
+    ) REFERENCES Equipment(EquipmentID)
+);
+
+CREATE TABLE SupportTicket (
+    TicketID                INT                 NOT NULL,
+    Type                    VARCHAR (30),
+    Status                  VARCHAR (15),
+    DateCreated             DATE,
+    DateResolved            DATE,
+    CustomerID              INT                 NOT NULL,
+    StaffSSN                VARCHAR (9),
+
+    PRIMARY KEY (
+        TicketID
+    ),
+    FOREIGN KEY (
+        CustomerID
+    ) REFERENCES Customer(UserID),
+    FOREIGN KEY (
+        StaffSSN
+    ) REFERENCES Staff(SSN)
+);
+
+CREATE TABLE Advertisement (
+    AdID                    INT                 NOT NULL,
+    AdType                  VARCHAR (30),
+    DatePublished           DATE,
+    NumberOfViews           INT                 CHECK(NumberOfViews >= 0),
+    ProductAdvertised       VARCHAR (30),
+    StaffSSN                VARCHAR (9)         NOT NULL,
+
+    PRIMARY KEY (
+        AdID
+    ),
+    FOREIGN KEY (
+        StaffSSN
+    ) REFERENCES Staff(SSN)
+);
+
+CREATE TABLE CustomerViewsAdvertisement (
+    CustomerID              INT         NOT NULL,
+    AdID                    INT         NOT NULL,
+
+    PRIMARY KEY (
+        CustomerID,
+        AdID
+    ),
+    FOREIGN KEY (
+        CustomerID
+    ) REFERENCES Customer(UserID),
+    FOREIGN KEY (
+        AdID
+    ) REFERENCES Advertisement(AdID)
+)
