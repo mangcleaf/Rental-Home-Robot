@@ -2,7 +2,7 @@ CREATE TABLE Facility (
     FacilityID              INT		        NOT NULL,
     City                    VARCHAR (15),
     Address 		        VARCHAR (30),
-    Phone 		            VARCHAR (20),
+    Phone 		            VARCHAR (15),
     RobotCapacity 	        INT 		    CHECK(RobotCapacity >= 0),
     VehicleCapacity 	    INT 		    CHECK(VehicleCapacity >= 0),
     
@@ -22,7 +22,7 @@ CREATE TABLE EquipmentModel (
 
 CREATE TABLE Equipment (
     EquipmentID             INT             NOT NULL,
-    SerialNumber            VARCHAR(30)     NOT NULL,
+    SerialNumber            VARCHAR(30)     NOT NULL    UNIQUE,
     Model                   VARCHAR(15),
     Status                  VARCHAR(20),
     Year                    INT,
@@ -37,5 +37,71 @@ CREATE TABLE Equipment (
     ) REFERENCES EquipmentModel(Model),
     FOREIGN KEY (
 	    FacilityID
+    ) REFERENCES Facility(FacilityID)
+);
+
+CREATE TABLE Robot(
+    EquipmentID             INT             NOT NULL,
+    Name                    VARCHAR (15),
+    BatteryAutonomy         INT             CHECK(BatteryAutonomy >= 0),
+    SensorSuite             VARCHAR (100),
+    PrimaryFunction         VARCHAR (20),
+
+    PRIMARY KEY (
+        EquipmentID
+    ),
+    FOREIGN KEY (
+        EquipmentID
+    ) REFERENCES Equipment(EquipmentID)
+);
+
+CREATE TABLE DriverlessCar(
+    EquipmentID             INT                 NOT NULL,
+    LicensePlate            VARCHAR (8)         NOT NULL                        UNIQUE,
+    PayloadCapacity         DECIMAL (10, 2)     CHECK(PayloadCapacity >= 0),
+    DistanceAutonomy        INT                 CHECK(DistanceAutonomy >= 0),
+    MaxSpeed                DECIMAL (5, 2)      CHECK(MaxSpeed >= 0),
+
+    PRIMARY KEY (
+        EquipmentID
+    ),
+    FOREIGN KEY (
+        EquipmentID
+    ) REFERENCES Equipment(EquipmentID)
+);
+
+CREATE TABLE CustomerFacilityDistance (
+    Address                 VARCHAR (30)        NOT NULL,
+    FacilityID              INT                 NOT NULL,
+    FacilityDistance        DECIMAL (10,2),
+
+    PRIMARY KEY (
+        Address,
+        FacilityID,
+    )
+
+    FOREIGN KEY (
+        FacilityID
+    ) REFERENCES Facility(FacilityID)
+);
+
+CREATE TABLE Customer (
+    UserId                  INT             NOT NULL,
+    FirstName               VARCHAR (15)    NOT NULL,
+    LastName                VARCHAR (15)    NOT NULL,
+    Address                 VARCHAR (30),
+    Phone                   VARCHAR (15)    UNIQUE,
+    Email                   VARCHAR (30)    UNIQUE,
+    StartDate               DATE,
+    FacilityID              INT,      
+
+    PRIMARY KEY (
+        UserId
+    ),
+    FOREIGN KEY (
+        Address
+    ) REFERENCES CustomerFacilityDistance(Address),
+    FOREIGN KEY (
+        FacilityID
     ) REFERENCES Facility(FacilityID)
 );
