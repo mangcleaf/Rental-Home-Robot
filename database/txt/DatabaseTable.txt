@@ -1,0 +1,41 @@
+CREATE TABLE Facility (
+    FacilityID              INT		        NOT NULL,
+    City                    VARCHAR (15),
+    Address 		        VARCHAR (30),
+    Phone 		            VARCHAR (20),
+    RobotCapacity 	        INT 		    CHECK(RobotCapacity >= 0),
+    VehicleCapacity 	    INT 		    CHECK(VehicleCapacity >= 0),
+    
+    PRIMARY KEY (
+        FacilityID
+    )
+);
+
+CREATE TABLE EquipmentModel (
+    Model 		            VARCHAR (15) 	NOT NULL,
+    Manufacturer 	        VARCHAR (20),
+
+    PRIMARY KEY (
+        Model
+    )
+);
+
+CREATE TABLE Equipment (
+    EquipmentID             INT             NOT NULL,
+    SerialNumber            VARCHAR(30)     NOT NULL,
+    Model                   VARCHAR(15),
+    Status                  VARCHAR(20),
+    Year                    INT,
+    WarrantyExpirationDate  DATE,
+    FacilityID              INT,
+
+    PRIMARY KEY (
+	    EquipmentID
+    ),
+    FOREIGN KEY (
+	    Model
+    ) REFERENCES EquipmentModel(Model),
+    FOREIGN KEY (
+	    FacilityID
+    ) REFERENCES Facility(FacilityID)
+);
