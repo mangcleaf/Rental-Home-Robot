@@ -74,7 +74,7 @@ public class MainMenu {
                     break;
                 case 3:
                     System.out.println("");
-                    System.out.println("Driverless Car Menu Underdevelopment");
+                    System.out.println("Driverless Car Menu Under Development");
                     pause();
                     break;
                 case 4:
@@ -83,6 +83,7 @@ public class MainMenu {
                     break;
                 case 5:
                     System.out.println("** This section will be implemented later **");
+                    pause();
                     break;
                 case 0:
                     System.out.println("");

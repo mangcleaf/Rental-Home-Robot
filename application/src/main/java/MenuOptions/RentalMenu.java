@@ -22,13 +22,14 @@ public class RentalMenu {
     }
 
     private Integer readInt(String prompt){
-        System.out.print(prompt);
+        while (true) {
+            System.out.print(prompt);
 
-        try{
-            return Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e){
-            System.out.println("Invalid Number!!!");
-            return null;
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Number!!! Try again");
+            }
         }
     }
 
@@ -101,6 +102,8 @@ public class RentalMenu {
                 case 4:
                     schedulePickup();
                     break;
+                case 0: 
+                    return;
                 default:
                     break;
             }
