@@ -31,13 +31,14 @@ public class MainMenu {
     }
 
     private Integer readInt(String prompt){
-        System.out.print(prompt);
-
-        try{
-            return Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e){
-            System.out.println("Invalid Number!!!");
-            return null;
+        while (true) {
+            System.out.print(prompt);
+            
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Number!!!");
+            }
         }
     }
 

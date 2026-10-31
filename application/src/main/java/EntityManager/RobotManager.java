@@ -49,6 +49,7 @@ public class RobotManager {
                 break;
             case 4:
                 robot.setName(newValue);
+                break;
             case 5:
                 robot.setBatteryAutonomy(Integer.parseInt(newValue));
                 break;
