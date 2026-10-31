@@ -23,7 +23,7 @@ CREATE TABLE EquipmentModel (
 CREATE TABLE Equipment (
     EquipmentID             INT             NOT NULL,
     SerialNumber            VARCHAR(30)     NOT NULL    UNIQUE,
-    Model                   VARCHAR(15)     ,
+    Model                   VARCHAR(15),
     Status                  VARCHAR(15),
     Year                    INT,
     WarrantyExpirationDate  DATE,
@@ -148,8 +148,8 @@ CREATE TABLE Manager (
 CREATE TABLE Rental (
     RentalID            INT                 NOT NULL,
     CheckoutDate        DATE,
-    DueDate             DATE,
-    ReturnDate          DATE,
+    DueDate             DATE                CHECK (DueDate >= CheckoutDate),
+    ReturnDate          DATE                CHECK (ReturnDate >= CheckoutDate OR RentalDate is NULL),
     RentalFees          DECIMAL (10, 2)     CHECK (RentalFees >= 0),
     CustomerID          INT                 NOT NULL,
     RobotEquipmentID    INT                 NOT NULL,
@@ -247,6 +247,9 @@ CREATE TABLE Reviews (
     PRIMARY KEY (
         ReviewID
     ),
+    UNIQUE (
+        CustomerID, EquipmentID
+    ),
     FOREIGN KEY (
         CustomerID
     ) REFERENCES Customer(UserID),
@@ -259,7 +262,7 @@ CREATE TABLE Maintenance (
     MaintenanceID               INT             NOT NULL,
     Type                        VARCHAR (30),
     DateIn                      DATE            NOT NULL,
-    DateOut                     DATE            NOT NULL,
+    DateOut                     DATE,
     Description                 TEXT,
     EquipmentID                 INT             NOT NULL,
 
@@ -273,10 +276,10 @@ CREATE TABLE Maintenance (
 
 CREATE TABLE SupportTicket (
     TicketID                INT                 NOT NULL,
-    Type                    VARCHAR (30),
-    Status                  VARCHAR (15),
-    DateCreated             DATE,
-    DateResolved            DATE,
+    Type                    VARCHAR (30)        NOT NULL,
+    Status                  VARCHAR (15)        NOT NULL,
+    DateCreated             DATE                NOT NULL,
+    DateResolved            DATE                CHECK (DateResolved >= DateCreated OR DateResolved IS NULL),
     CustomerID              INT                 NOT NULL,
     StaffSSN                VARCHAR (9),
 
