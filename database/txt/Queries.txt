@@ -1,0 +1,7 @@
+-- Question 1: Get the models of every Robot from Universal Robots released before 2025.
+SELECT E.Model
+FROM Robot AS R
+JOIN Equipment AS E ON R.EquipmentID = E.EquipmentID
+JOIN EquipmentModel AS EM ON E.Model = EM.Model
+WHERE EM.Manufacturer = 'Universal Robots'
+AND E.Year < 2025;
