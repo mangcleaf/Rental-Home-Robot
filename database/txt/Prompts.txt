@@ -1943,7 +1943,8 @@ Reviews Database Table
         39        Impressive build quality             4       119         3
         40        Had to return it, defective          1       120         4
 
-        If you’re loading this into a database, I can convert it to SQL INSERT statements (with a CREATE TABLE and foreign keys to Customers and Equipment tables) or a CSV file. Just say which you’d prefer.
+        If you’re loading this into a database, I can convert it to SQL INSERT statements (with a CREATE TABLE and foreign keys to Customers and Equipment tables) or a 
+        CSV file. Just say which you’d prefer.
 
     Revised Prompt:
         Here is some more context:
@@ -1966,8 +1967,8 @@ Reviews Database Table
         Revise the table. Ensure all foreign keys match existing records, all unique/primary-key constraints are respected, and values fit the types.
 
     Response:
-        The earlier version didn’t match your reference tables. CustomerIDs 101-120 don’t exist (valid IDs are 1001-1044), and EquipmentIDs 1-12 don’t exist (valid IDs are 1001-1045). 
-        The comments also described gym gear, while your equipment is robots and vehicles. I rebuilt the table with 48 records.
+        The earlier version didn’t match your reference tables. CustomerIDs 101-120 don’t exist (valid IDs are 1001-1044), and EquipmentIDs 1-12 don’t exist 
+        (valid IDs are 1001-1045). The comments also described gym gear, while your equipment is robots and vehicles. I rebuilt the table with 48 records.
 
         ReviewID  Comments                                          Rating  CustomerID  EquipmentID
         1         Spot handled site inspections flawlessly          5       1001        1001
@@ -2022,7 +2023,8 @@ Reviews Database Table
         Constraint checks
             - ReviewID: 1-48, unique and non-null.
             - Foreign keys: every CustomerID is in 1001-1044, and every EquipmentID is in 1001-1044, which are all in your Equipment table (1001-1045).
-            - UNIQUE(CustomerID, EquipmentID): all 48 pairs are distinct. Customers 1001-1004 each review two different pieces of equipment, which is allowed because only the pair must be unique.
+            - UNIQUE(CustomerID, EquipmentID): all 48 pairs are distinct. Customers 1001-1004 each review two different pieces of equipment, which is allowed 
+              because only the pair must be unique.
             - Rating: all values are integers from 1 to 5.
             - Comments: text values.
             - Functional dependencies: ReviewID determines every other column, and each (CustomerID, EquipmentID) pair maps to exactly one review.
