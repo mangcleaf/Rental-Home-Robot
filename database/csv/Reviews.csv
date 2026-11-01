@@ -1,0 +1,41 @@
+﻿ReviewID,Comments,Rating,CustomerID,EquipmentID
+1,"Works great, very sturdy",5,101,1
+2,Easy to set up and use,4,102,2
+3,Stopped working after two weeks,1,103,3
+4,Good value for the price,4,104,4
+5,Exactly as described,5,105,5
+6,A bit noisy but does the job,3,106,6
+7,"Excellent quality, would rent again",5,107,7
+8,Arrived with scratches,2,108,8
+9,Comfortable and well built,5,109,9
+10,Instructions were confusing,2,110,10
+11,Perfect for my home gym,5,111,1
+12,Average performance,3,112,2
+13,Handle felt loose,2,113,3
+14,Very smooth operation,4,114,4
+15,Highly recommend,5,115,5
+16,Too heavy to move around,3,116,6
+17,Great for beginners,4,117,7
+18,Broke during first use,1,118,8
+19,Solid construction,5,119,9
+20,"Okay, but nothing special",3,120,10
+21,Fast delivery and great condition,5,101,11
+22,Display stopped responding,2,102,12
+23,Does everything I need,4,103,11
+24,Not worth the rental fee,2,104,12
+25,Quiet and efficient,4,105,1
+26,Excellent customer experience,5,106,2
+27,Missing a few parts,1,107,3
+28,Adjustable and comfortable,4,108,4
+29,Used it daily with no problems,5,109,5
+30,Slightly worn but functional,3,110,6
+31,Best piece of equipment I’ve tried,5,111,7
+32,Wobbles on uneven floors,2,112,8
+33,Compact and easy to store,4,113,9
+34,Decent quality overall,3,114,10
+35,Would definitely recommend,5,115,11
+36,Battery drained too quickly,2,116,12
+37,"Smooth, reliable, and durable",5,117,1
+38,Fine for occasional use,3,118,2
+39,Impressive build quality,4,119,3
+40,"Had to return it, defective",1,120,4
