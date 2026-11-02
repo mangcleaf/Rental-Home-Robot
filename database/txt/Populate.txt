@@ -1,0 +1,22 @@
+.mode csv
+
+.import --skip 1 "EquipmentModel.csv" EquipmentModel
+.import --skip 1 "Facility.csv" Facility
+.import --skip 1 "Equipment.csv" Equipment
+.import --skip 1 "Robot.csv" Robot
+.import --skip 1 "DriverlessCar.csv" DriverlessCar
+.import --skip 1 "CustomerFacilityDistance.csv" CustomerFacilityDistance
+.import --skip 1 "Customer.csv" Customer
+.import --skip 1 "Staff.csv" Staff
+.import --skip 1 "Supervisor.csv" Supervisor
+.import --skip 1 "Manager.csv" Manager
+.import --skip 1 "Rental.csv" Rental
+.import --skip 1 "FacilityOrders.csv" FacilityOrders
+.import --skip 1 "OrderItems.csv" OrderItems
+.import --skip 1 "DeliveryPickup.csv" DeliveryPickup
+.import --skip 1 "Readiness.csv" Readiness
+.import --skip 1 "Reviews.csv" Reviews
+.import --skip 1 "Maintenance.csv" Maintenance
+.import --skip 1 "SupportTicket.csv" SupportTicket
+.import --skip 1 "Advertisement.csv" Advertisement
+.import --skip 1 "CustomerViewsAdvertisement.csv" CustomerViewsAdvertisement
