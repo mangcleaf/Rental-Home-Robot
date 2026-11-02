@@ -1,0 +1,56 @@
+View 1: RentalPerformanceByModel
+
+Description: Displays completed or ongoing robot rental transactions by equipment model, number of rentals, total fees and average fees.
+
+Business justification: Allow for comparison between the models of robots, based on how they are performing from a fee standpoint.
+
+Relational algebra:
+
+R1 <- (((EquipmentModel NATURAL JOIN Equipment) NATURAL JOIN Robot) JOIN{Robot.EquipmentID=Rental.RobotEquipmentID} Rental)
+
+R2(Model, TotalRentals) <- Model COUNT(RentalID) R1
+
+R3(Model, TotalRentalFees) <- Model SUM(RentalFees) R1
+
+R4(Model, AverageRentalFee) <- Model AVG(RentalFees) R1
+
+R5 <- ((R2 NATURAL JOIN R3) NATURAL JOIN R4)
+
+Result <- PROJECT(Model, TotalRentals, TotalRentalFees, AverageRentalFee) R5
+
+SQL: 
+
+CREATE VIEW RentalPerformanceByModel AS
+SELECT em.Model, COUNT(r.RentalID) AS TotalRentals, SUM(r.RentalFees) AS TotalRentalFees, AVG(r.RentalFees) AS AverageRentalFee
+FROM EquipmentModel AS em
+JOIN Equipment AS e ON e.Model = em.Model
+JOIN Robot AS rb ON rb.EquipmentID = e.EquipmentID
+JOIN Rental AS r ON r.RobotEquipmentID = rb.EquipmentID
+GROUP BY em.Model;
+_____________________________________________________________________________________________________________________________________________________________
+
+View 2: PerCustomerView
+
+Description: Display each customer's rental frequency, total and average rentalfees.
+
+Business justification: Shows who are the companies most lucrative customers.
+
+Relational algebra:
+
+R1 <- Customer JOIN{Customer.UserID=Rental.CustomerID} Rental
+
+R2(UserId, FirstName, LastName, TotalRentals) <- UserId, FirstName, LastName COUNT(RentalID) R1
+
+R3(UserID, TotalFees) <- UserID SUM(RentalFees) R1
+
+R4(UserID, AverageFee) <- UserID AVG(RentalFees) R1
+
+Result <- ((R2 NATURAL JOIN R3) NATURAL JOIN R4) JOIN
+
+SQL:
+
+CREATE VIEW CustomerRentalValue AS
+SELECT c.UserID, c.FirstName, c.LastName, COUNT(r.RentalID) AS RentalCount, SUM(r.RentalFees) AS TotalRentalFees, AVG(r.RentalFees) AS AverageRentalFee
+FROM Customer AS c
+JOIN Rental AS r ON r.CustomerID = c.UserID
+GROUP BY c.UserID;
