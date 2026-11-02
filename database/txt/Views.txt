@@ -50,7 +50,7 @@ Result <- ((R2 NATURAL JOIN R3) NATURAL JOIN R4) JOIN
 
 SQL:
 
-CREATE VIEW CustomerRentalValue AS
+CREATE VIEW PerCustomerView AS
 SELECT c.UserID, c.FirstName, c.LastName, COUNT(r.RentalID) AS RentalCount, SUM(r.RentalFees) AS TotalRentalFees, AVG(r.RentalFees) AS AverageRentalFee
 FROM Customer AS c
 JOIN Rental AS r ON r.CustomerID = c.UserID
