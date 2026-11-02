@@ -27,7 +27,7 @@ JOIN Equipment AS e ON e.Model = em.Model
 JOIN Robot AS rb ON rb.EquipmentID = e.EquipmentID
 JOIN Rental AS r ON r.RobotEquipmentID = rb.EquipmentID
 GROUP BY em.Model
-ORDER BY TotalRentals ASC;
+ORDER BY TotalRentals DESC;
 _____________________________________________________________________________________________________________________________________________________________
 
 View 2: PerCustomerView
@@ -55,4 +55,4 @@ SELECT c.UserID, c.FirstName, c.LastName, COUNT(r.RentalID) AS RentalCount, SUM(
 FROM Customer AS c
 JOIN Rental AS r ON r.CustomerID = c.UserID
 GROUP BY c.UserID
-ORDER BY RentalCount ASC;
+ORDER BY RentalCount DESC;
