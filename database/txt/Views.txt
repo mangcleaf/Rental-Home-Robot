@@ -26,7 +26,8 @@ FROM EquipmentModel AS em
 JOIN Equipment AS e ON e.Model = em.Model
 JOIN Robot AS rb ON rb.EquipmentID = e.EquipmentID
 JOIN Rental AS r ON r.RobotEquipmentID = rb.EquipmentID
-GROUP BY em.Model;
+GROUP BY em.Model
+ORDER BY TotalRentals ASC;
 _____________________________________________________________________________________________________________________________________________________________
 
 View 2: PerCustomerView
@@ -53,4 +54,5 @@ CREATE VIEW CustomerRentalValue AS
 SELECT c.UserID, c.FirstName, c.LastName, COUNT(r.RentalID) AS RentalCount, SUM(r.RentalFees) AS TotalRentalFees, AVG(r.RentalFees) AS AverageRentalFee
 FROM Customer AS c
 JOIN Rental AS r ON r.CustomerID = c.UserID
-GROUP BY c.UserID;
+GROUP BY c.UserID
+ORDER BY RentalCount ASC;
