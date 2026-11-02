@@ -1,0 +1,23 @@
+-- Question 7: Select the robot models that have an average review rating of at least 4 out of 5
+SELECT E.Model, AVG(RE.Rating) AS AvgRating
+FROM Equipment AS E
+JOIN Robot AS R ON E.EquipmentID = R.EquipmentID
+JOIN Reviews AS RE ON E.EquipmentID = RE.EquipmentID
+GROUP BY E.Model
+HAVING AvgRating >= 4;
+
+
+-- Question 8: List the names of every customer who have an open support ticket
+SELECT DISTINCT C.FirstName, C.LastName
+FROM Customer AS C
+JOIN SupportTicket AS S ON C.UserID = S.CustomerID
+WHERE S.Status = 'Open';
+
+
+-- Question 9: List the number of Robots and Vehicles that each Facility has
+SELECT E.FacilityID, COUNT(R.EquipmentID), COUNT(D.EquipmentID)
+FROM Equipment AS E
+LEFT JOIN Robot AS R ON E.EquipmentID = R.EquipmentID
+LEFT JOIN DriverlessCar AS D ON E.EquipmentID = D.EquipmentID
+GROUP BY E.FacilityID; 
+
