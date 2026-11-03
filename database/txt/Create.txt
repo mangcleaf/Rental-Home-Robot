@@ -145,7 +145,7 @@ CREATE TABLE Manager (
     ) REFERENCES Facility(FacilityID)
 );
 
-CREATE TABLE Rental (
+CREATE TABLE Rentals (
     RentalID            INT                 NOT NULL,
     CheckoutDate        DATE,
     DueDate             DATE                CHECK (DueDate >= CheckoutDate),
