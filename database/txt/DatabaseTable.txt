@@ -149,7 +149,7 @@ CREATE TABLE Rental (
     RentalID            INT                 NOT NULL,
     CheckoutDate        DATE,
     DueDate             DATE                CHECK (DueDate >= CheckoutDate),
-    ReturnDate          DATE                CHECK (ReturnDate >= CheckoutDate OR RentalDate is NULL),
+    ReturnDate          DATE                CHECK (ReturnDate >= CheckoutDate OR ReturnDate is NULL),
     RentalFees          DECIMAL (10, 2)     CHECK (RentalFees >= 0),
     CustomerID          INT                 NOT NULL,
     RobotEquipmentID    INT                 NOT NULL,

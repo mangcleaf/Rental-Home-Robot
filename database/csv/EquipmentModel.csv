@@ -1,0 +1,46 @@
+﻿Model,Manufacturer
+Spot,Boston Dynamics
+Stretch,Boston Dynamics
+Atlas,Boston Dynamics
+M-20iD/25,FANUC
+CRX-10iA,FANUC
+R-2000iC,FANUC
+IRB 6700,ABB
+IRB 1200,ABB
+YuMi,ABB
+KR 210 R2700,KUKA
+KR 10 R1100,KUKA
+LBR iiwa 14,KUKA
+UR5e,Universal Robots
+UR10e,Universal Robots
+UR20,Universal Robots
+GP25,Yaskawa
+HC10DT,Yaskawa
+MH50,Yaskawa
+Origin,Locus Robotics
+Freight 1500,Zebra Robotics
+MiR250,Mobile Ind. Robots
+MiR600,Mobile Ind. Robots
+Proteus,Amazon Robotics
+Sequoia,Amazon Robotics
+Digit,Agility Robotics
+Apollo,Apptronik
+TM12,Techman Robot
+Panda,Franka Emika
+RV-7FR,Mitsubishi Electric
+TX2-90,Staubli
+MZ07,Nachi-Fujikoshi
+Transit 250,Ford
+E-Transit,Ford
+F-150 Lightning,Ford
+Sprinter 2500,Mercedes-Benz
+ProMaster 2500,Ram
+Cascadia,Freightliner
+eCascadia,Freightliner
+579,Peterbilt
+T680,Kenworth
+VNL 860,Volvo Trucks
+Zevo 600,BrightDrop
+EDV 700,Rivian
+Semi,Tesla
+LR Electric,Mack Trucks
