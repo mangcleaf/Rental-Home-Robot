@@ -24,4 +24,4 @@ hs_err_pid*
 replay_pid*
 
 # Maven build output
-target/
+target/.DS_Store

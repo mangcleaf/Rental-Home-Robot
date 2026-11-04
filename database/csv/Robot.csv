@@ -1,0 +1,51 @@
+﻿EquipmentID,Name,BatteryAutonomy,SensorSuite,PrimaryFunction
+1,MiR250,600,"Safety LiDAR, 3D cameras, IMU, wheel encoders",Material transport
+3,TM12,0,"Wrist camera, force-torque, joint encoders",Cobot assembly
+4,UR20,0,"Joint torque sensors, encoders, safety I/O",Palletizing
+11,IRB 1200,0,"Joint encoders, optional vision",Parts handling
+15,Origin,480,"3D cameras, safety LiDAR, RFID reader",Order picking
+17,Apollo,240,"Stereo cameras, LiDAR, IMU, force sensors",Humanoid logistics
+18,YuMi,0,"Joint encoders, force sensing, camera",Small assembly
+19,UR20,0,"Joint torque sensors, encoders, safety I/O",Palletizing
+21,TM12,0,"Wrist camera, force-torque, joint encoders",Cobot assembly
+22,TX2-90,0,"Joint encoders, force sensing, safety I/O",Precision handling
+23,M-20iD/25,0,"Joint encoders, vision, force sensor",Material handling
+26,KR 210 R2700,0,"Joint encoders, collision detection",Heavy handling
+28,MiR600,480,"Safety LiDAR, 3D cameras, IMU",Pallet transport
+29,UR10e,0,"Force-torque, joint encoders, safety I/O",Machine tending
+31,UR20,0,"Joint torque sensors, encoders, safety I/O",Palletizing
+32,UR20,0,"Joint torque sensors, encoders, safety I/O",Palletizing
+33,MZ07,0,"Joint encoders, vision, force sensor",Assembly
+35,UR10e,0,"Force-torque, joint encoders, safety I/O",Machine tending
+37,Panda,0,"Joint torque sensors, encoders",Lab automation
+38,KR 10 R1100,0,"Joint encoders, collision detection",Light handling
+41,Stretch,480,"3D cameras, LiDAR, safety scanners",Truck unloading
+42,HC10DT,0,"Torque sensors, joint encoders",Cobot handling
+46,GP25,0,"Joint encoders, optional vision",Material handling
+50,IRB 1200,0,"Joint encoders, optional vision",Parts handling
+51,UR10e,0,"Force-torque, joint encoders, safety I/O",Machine tending
+52,HC10DT,0,"Torque sensors, joint encoders",Cobot handling
+53,KR 10 R1100,0,"Joint encoders, collision detection",Light handling
+54,UR5e,0,"Force-torque, joint encoders, safety I/O",Pick and place
+57,Atlas,90,"Depth cameras, LiDAR, IMU, joint encoders",Mobile manipulation
+58,KR 210 R2700,0,"Joint encoders, collision detection",Heavy handling
+61,MiR600,480,"Safety LiDAR, 3D cameras, IMU",Pallet transport
+62,IRB 1200,0,"Joint encoders, optional vision",Parts handling
+64,Stretch,480,"3D cameras, LiDAR, safety scanners",Truck unloading
+65,GP25,0,"Joint encoders, optional vision",Material handling
+67,Apollo,240,"Stereo cameras, LiDAR, IMU, force sensors",Humanoid logistics
+68,KR 10 R1100,0,"Joint encoders, collision detection",Light handling
+70,MH50,0,"Joint encoders, optional vision",Material handling
+71,GP25,0,"Joint encoders, optional vision",Material handling
+72,Digit,240,"Depth cameras, LiDAR, IMU, joint encoders",Tote handling
+73,R-2000iC,0,"Joint encoders, vision, force sensor",Spot welding
+74,Freight 1500,480,"2D LiDAR, depth camera, IMU",Cart transport
+75,MiR250,600,"Safety LiDAR, 3D cameras, IMU, wheel encoders",Material transport
+77,R-2000iC,0,"Joint encoders, vision, force sensor",Spot welding
+78,RV-7FR,0,"Joint encoders, force sensor",Assembly
+79,Spot,90,"Stereo cameras, LiDAR, IMU",Site inspection
+80,MZ07,0,"Joint encoders, vision, force sensor",Assembly
+82,CRX-10iA,0,"Joint encoders, collision detection",Cobot handling
+83,Spot,90,"Stereo cameras, LiDAR, IMU",Site inspection
+84,Origin,480,"3D cameras, safety LiDAR, RFID reader",Order picking
+85,Freight 1500,480,"2D LiDAR, depth camera, IMU",Cart transport

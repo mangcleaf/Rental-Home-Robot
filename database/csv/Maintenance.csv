@@ -1,0 +1,42 @@
+﻿MaintenanceID,Type,DateIn,DateOut,Description,EquipmentID
+1,Preventive,2025-01-06,2025-01-07,Replaced drive wheel tires; inspected LiDAR,1
+2,Preventive,2025-01-13,2025-01-13,Oil change and tire rotation,27
+3,Corrective,2025-01-20,2025-01-22,Replaced worn gear drive on joint 3,4
+4,Inspection,2025-02-03,2025-02-03,Annual DOT safety inspection,13
+5,Calibration,2025-02-10,2025-02-11,TCP and payload calibration,26
+6,Corrective,2025-02-18,2025-02-20,Replaced faulty servo amplifier,23
+7,Preventive,2025-03-03,2025-03-03,Greased axes and changed gearbox oil,77
+8,Inspection,2025-03-10,2025-03-10,Checked battery health and charging contacts,83
+9,Corrective,2025-03-17,2025-03-19,Replaced cracked windshield,16
+10,Calibration,2025-03-24,2025-03-24,Recalibrated force/torque sensor,54
+11,Preventive,2025-04-07,2025-04-07,Rotated tires and checked brakes,63
+12,Emergency,2025-04-14,2025-04-15,Replaced damaged teach pendant cable,38
+13,Corrective,2025-04-21,2025-04-23,Replaced battery coolant pump,12
+14,Inspection,2025-05-05,2025-05-05,Safety stop and brake test,31
+15,Preventive,2025-05-12,2025-05-12,Replaced cabin air filter; software update,56
+16,Calibration,2025-05-19,2025-05-20,Zero-position (mastering) calibration,62
+17,Corrective,2025-06-02,2025-06-04,Replaced gripper vacuum pump,41
+18,Preventive,2025-06-09,2025-06-09,Engine oil and DEF filter service,69
+19,Inspection,2025-06-16,2025-06-16,Inspected joint cables and connectors,3
+20,Emergency,2025-06-23,2025-06-24,Replaced blown motor controller fuse,33
+21,Corrective,2025-07-07,2025-07-09,Replaced worn wheel bearing,55
+22,Preventive,2025-07-14,2025-07-14,Cleaned cameras and depth sensors,72
+23,Calibration,2025-07-21,2025-07-21,Recalibrated navigation map and LiDAR,85
+24,Inspection,2025-08-04,2025-08-04,Brake and suspension inspection,30
+25,Corrective,2025-08-11,2025-08-13,Replaced end-effector proximity sensor,53
+26,Preventive,2025-08-18,2025-08-18,Replaced controller cooling fan filter,71
+27,Emergency,2025-09-02,2025-09-03,Repaired collision damage to arm cover,22
+28,Inspection,2025-09-15,2025-09-15,Checked actuator wear; updated firmware,57
+29,Calibration,2025-10-06,2025-10-07,Wheel encoder and IMU calibration,75
+30,Corrective,2025-11-03,2025-11-05,Replaced 12V auxiliary battery,49
+31,Preventive,2025-12-01,2025-12-01,Winter tire swap and fluid check,81
+32,Inspection,2026-01-12,2026-01-12,Safety sensor and LiDAR check,15
+33,Corrective,2026-02-09,2026-02-11,Replaced wrist joint torque sensor,18
+34,Preventive,2026-03-16,2026-03-16,Lubricated joints; replaced battery pack,67
+35,Calibration,2026-04-20,2026-04-21,Payload and TCP recalibration,58
+36,Corrective,2026-09-14,,Diagnosing joint 2 encoder fault,11
+37,Corrective,2026-10-05,,Replacing left knee actuator,17
+38,Inspection,2026-10-12,,Failed brake test; awaiting replacement brake,37
+39,Preventive,2026-10-19,,Scheduled reducer overhaul,52
+40,Corrective,2026-10-26,,Replacing J1 motor,73
+41,Corrective,2026-10-28,,Replacing controller power supply,50

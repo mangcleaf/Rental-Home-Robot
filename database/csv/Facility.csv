@@ -1,0 +1,17 @@
+﻿FacilityID,City,Address,Phone,RobotCapacity,VehicleCapacity
+1,Columbus,1200 Innovation Dr,(614) 555-0101,150,40
+2,Cleveland,455 Lakeshore Blvd,(216) 555-0112,120,35
+3,Cincinnati,78 Riverfront Pkwy,(513) 555-0123,200,60
+4,Detroit,3300 Gratiot Ave,(313) 555-0134,180,55
+5,Chicago,901 W Fulton St,(312) 555-0145,250,80
+6,Indianapolis,2250 Meridian St,(317) 555-0156,140,45
+7,Pittsburgh,610 Penn Ave,(412) 555-0167,110,30
+8,Atlanta,5400 Peachtree Rd,(404) 555-0178,220,70
+9,Dallas,8800 Stemmons Fwy,(214) 555-0189,300,100
+10,Houston,1750 Ship Channel Rd,(713) 555-0190,280,90
+11,Phoenix,4100 E Van Buren St,(602) 555-0201,190,65
+12,Denver,2900 Brighton Blvd,(303) 555-0212,160,50
+13,Seattle,1500 Airport Way S,(206) 555-0223,170,48
+14,Los Angeles,6200 S Alameda St,(323) 555-0234,320,110
+15,Nashville,990 Elm Hill Pike,(615) 555-0245,130,42
+16,Charlotte,3700 Statesville Ave,(704) 555-0256,145,46

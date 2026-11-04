@@ -1,0 +1,62 @@
+-- Question 1: Get the models of every Robot from Universal Robots released before 2025.
+SELECT E.Model
+FROM Robot AS R
+JOIN Equipment AS E ON R.EquipmentID = E.EquipmentID
+JOIN EquipmentModel AS EM ON E.Model = EM.Model
+WHERE EM.Manufacturer = 'Universal Robots'
+AND E.Year < 2025;
+
+
+-- Question 2: Give the Robot names and its checkout date, return date, and due date of Maria Garcia's Robot rental(s).
+SELECT R.Name, RE.CheckoutDate, RE.DueDate, RE.ReturnDate
+FROM Robot AS R
+JOIN Rentals AS RE ON R.EquipmentID = RE.RobotEquipmentID
+JOIN Customer AS C ON RE.CustomerID = C.UserID
+WHERE C.FirstName = 'Maria' AND C.LastName = 'Garcia';
+
+
+-- Question 3: List all Driverless car models by payload capacity and their unique identifiers with 2 or less units held by a specific Community Center.
+SELECT E.Model, D.PayloadCapacity, D.EquipmentId
+FROM Equipment AS E
+JOIN DriverlessCar AS D ON E.EquipmentID = D.EquipmentID
+WHERE E.FacilityID = 1
+AND E.Model IN (
+    SELECT E.Model
+    FROM Equipment AS E
+    JOIN DriverlessCar AS D ON E.EquipmentID = D.EquipmentID
+    WHERE E.FacilityID = 1
+    GROUP BY E.Model
+    HAVING COUNT(E.EquipmentID) <= 2
+)
+ORDER BY D.PayloadCapacity DESC;
+
+
+-- Question 4: Give the customer names within 10 miles of the Columbus facility (facility #1) and the robots they rented using Driverless Car #39.
+SELECT C.FirstName, C.LastName, R.Name
+FROM Customer AS C
+JOIN CustomerFacilityDistance AS CFD ON C.Address = CFD.Address AND C.FacilityID = CFD.FacilityID
+JOIN Rentals AS RE ON C.UserID = RE.CustomerID
+JOIN DeliveryPickUp AS D ON RE.RentalID = D.RentalID
+JOIN Robot AS R ON RE.RobotEquipmentID = R.EquipmentID
+WHERE CFD.FacilityID = 1
+AND CFD.FacilityDistance <= 10
+AND D.CarEquipmentID = 39
+AND D.Type = 'Delivery';
+
+
+-- Question 5: Find the number of unique Driverless Cars that have picked up Robots on 23 Hemlock Lane.
+SELECT COUNT(DISTINCT D.CarEquipmentID) AS NumCars
+FROM DeliveryPickUp AS D
+JOIN Rentals AS R ON D.RentalID = R.RentalID
+JOIN Customer AS C ON R.CustomerID = C.UserID
+WHERE D.Type = 'Pickup'
+AND C.Address = '23 Hemlock Lane';
+
+
+-- Question 6: Find the Customer who has rented the most Robots
+SELECT C.FirstName, C.LastName, COUNT(R.RentalID) AS NumRobots
+FROM Customer AS C
+JOIN Rentals AS R ON C.UserID = R.CustomerID
+GROUP BY C.UserID
+ORDER BY NumRobots DESC
+LIMIT 1;
