@@ -1,0 +1,60 @@
+-- Query 1: Get the models of every Robot from Universal Robots released before 2025.
+--     Fix: Added DISTINCT so it doesn't return duplicates. 
+
+SELECT DISTINCT E.Model 
+FROM Robot AS R 
+JOIN Equipment AS E ON R.EquipmentID = E.EquipmentID 
+JOIN EquipmentModel AS EM ON E.Model = EM.Model 
+WHERE EM.Manufacturer = 'Universal Robots' AND E.Year < 2025; 
+
+
+-- Query 2: Give the Robot names and its checkout date, return date, and due date of Timothy Phillips’s Robot rental(s). 
+--     Fix: Changed Query so it returned a result.
+
+SELECT R.Name, RE.CheckoutDate, RE.DueDate, RE.ReturnDate 
+FROM Robot AS R 
+JOIN Rentals AS RE ON R.EquipmentID = RE.RobotEquipmentID 
+JOIN Customer AS C ON RE.CustomerID = C.UserID 
+WHERE C.FirstName = 'Timothy' AND C.LastName = 'Phillips'; 
+
+-- Query 4: Give the customer names within 10 miles of the Cleveland facility (facility #2) and the robots they rented using Driverless Car #27.  
+--     Fix: Changed Query so it returned a result.
+
+SELECT C.FirstName, C.LastName, R.Name 
+FROM Customer AS C 
+JOIN CustomerFacilityDistance AS CFD ON C.Address = CFD.Address AND C.FacilityID = CFD.FacilityID 
+JOIN Rentals AS RE ON C.UserID = RE.CustomerID 
+JOIN DeliveryPickUp AS D ON RE.RentalID = D.RentalID 
+JOIN Robot AS R ON RE.RobotEquipmentID = R.EquipmentID 
+WHERE CFD.FacilityID = 2 
+AND CFD.FacilityDistance <= 10 
+AND D.CarEquipmentID = 27 
+AND D.Type = 'Delivery'; 
+
+
+-- Query 6: Find the Customer who has rented the most Robots, returning the Customer’s name and total number of robots they rented. 
+--     Fix: Removed LIMIT, Used MAX in subquery.
+
+SELECT C.FirstName, C.LastName, COUNT(*) AS TotalRentals 
+FROM Customer AS C 
+JOIN Rentals AS R ON C.UserID = R.CustomerID 
+GROUP BY C.UserID, C.FirstName, C.LastName 
+HAVING COUNT(*) = ( 
+    SELECT MAX(RentalCount) 
+    FROM ( 
+        SELECT COUNT(*) AS RentalCount 
+        FROM Rentals 
+        GROUP BY CustomerID 
+    ) 
+) 
+
+
+-- Query 9: List the number of Robots and Vehicles that each Facility has. 
+--     Fix: Used the revised version from Checkpoint 3 Part 7.
+
+SELECT F.FacilityID, COUNT(R.EquipmentID) AS RobotCount, COUNT(D.EquipmentID) AS CarCount 
+FROM Facility AS F 
+LEFT JOIN Equipment AS E ON F.FacilityID = E.FacilityID 
+LEFT JOIN Robot AS R ON E.EquipmentID = R.EquipmentID 
+LEFT JOIN DriverlessCar AS D ON E.EquipmentID = D.EquipmentID 
+GROUP BY F.FacilityID; 
