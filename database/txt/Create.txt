@@ -32,12 +32,14 @@ CREATE TABLE Equipment (
     PRIMARY KEY (
 	    EquipmentID
     ),
-    FOREIGN KEY (
-	    Model
-    ) REFERENCES EquipmentModel(Model),
-    FOREIGN KEY (
-	    FacilityID
-    ) REFERENCES Facility(FacilityID)
+    FOREIGN KEY (Model) 
+        REFERENCES EquipmentModel(Model)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    FOREIGN KEY (FacilityID) 
+        REFERENCES Facility(FacilityID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT 
 );
 
 CREATE TABLE Robot(
@@ -50,9 +52,10 @@ CREATE TABLE Robot(
     PRIMARY KEY (
         EquipmentID
     ),
-    FOREIGN KEY (
-        EquipmentID
-    ) REFERENCES Equipment(EquipmentID)
+    FOREIGN KEY (EquipmentID) 
+        REFERENCES Equipment(EquipmentID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 CREATE TABLE DriverlessCar(
@@ -65,9 +68,10 @@ CREATE TABLE DriverlessCar(
     PRIMARY KEY (
         EquipmentID
     ),
-    FOREIGN KEY (
-        EquipmentID
-    ) REFERENCES Equipment(EquipmentID)
+    FOREIGN KEY (EquipmentID) 
+        REFERENCES Equipment(EquipmentID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 CREATE TABLE CustomerFacilityDistance (
@@ -79,9 +83,10 @@ CREATE TABLE CustomerFacilityDistance (
         Address,
         FacilityID
     ),
-    FOREIGN KEY (
-        FacilityID
-    ) REFERENCES Facility(FacilityID)
+    FOREIGN KEY (FacilityID) 
+        REFERENCES Facility(FacilityID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Customer (
@@ -97,10 +102,10 @@ CREATE TABLE Customer (
     PRIMARY KEY (
         UserID
     ),
-    FOREIGN KEY (
-        Address,
-        FacilityID
-    ) REFERENCES CustomerFacilityDistance(Address, FacilityID)
+    FOREIGN KEY (Address, FacilityID) 
+        REFERENCES CustomerFacilityDistance(Address, FacilityID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT 
 );
 
 CREATE TABLE Staff(
@@ -114,9 +119,11 @@ CREATE TABLE Staff(
     PRIMARY KEY (
         SSN
     ),
-    FOREIGN KEY (
-        FacilityID
-    ) REFERENCES Facility(FacilityID)
+    FOREIGN KEY (FacilityID) 
+        REFERENCES Facility(FacilityID)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL 
+
 );
 
 CREATE TABLE Supervisor (
@@ -125,9 +132,11 @@ CREATE TABLE Supervisor (
     PRIMARY KEY (
         SSN
     ),
-    FOREIGN KEY (
-        SSN
-    ) REFERENCES Staff(SSN)
+    FOREIGN KEY (SSN) 
+        REFERENCES Staff(SSN)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+
 );
 
 CREATE TABLE Manager (
@@ -137,12 +146,14 @@ CREATE TABLE Manager (
     PRIMARY KEY (
         SSN
     ),
-    FOREIGN KEY (
-        SSN
-    ) REFERENCES Staff(SSN),
-    FOREIGN KEY (
-        FacilityID
-    ) REFERENCES Facility(FacilityID)
+    FOREIGN KEY (SSN) 
+        REFERENCES Staff(SSN)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (FacilityID) 
+        REFERENCES Facility(FacilityID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE Rentals (
@@ -157,12 +168,14 @@ CREATE TABLE Rentals (
     PRIMARY KEY (
         RentalID
     ),
-    FOREIGN KEY (
-        CustomerID
-    ) REFERENCES Customer(UserID),
-    FOREIGN KEY (
-        RobotEquipmentID
-    ) REFERENCES Robot(EquipmentID)
+    FOREIGN KEY (CustomerID) 
+        REFERENCES Customer(UserID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    FOREIGN KEY (RobotEquipmentID) 
+        REFERENCES Robot(EquipmentID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE FacilityOrders (
@@ -174,9 +187,10 @@ CREATE TABLE FacilityOrders (
     PRIMARY KEY (
         OrderID
     ),
-    FOREIGN KEY (
-        FacilityID
-    ) REFERENCES Facility(FacilityID)
+    FOREIGN KEY (FacilityID) 
+        REFERENCES Facility(FacilityID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE OrderItems(
@@ -187,12 +201,14 @@ CREATE TABLE OrderItems(
     PRIMARY KEY (
         ItemID
     ),
-    FOREIGN KEY (
-        OrderID
-    ) REFERENCES FacilityOrders(OrderID),
-    FOREIGN KEY (
-        EquipmentID
-    ) REFERENCES Equipment(EquipmentID)
+    FOREIGN KEY (OrderID) 
+        REFERENCES FacilityOrders(OrderID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (EquipmentID) 
+        REFERENCES Equipment(EquipmentID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE DeliveryPickup (
@@ -206,12 +222,14 @@ CREATE TABLE DeliveryPickup (
     PRIMARY KEY (
         DeliveryPickupID
     ),
-    FOREIGN KEY (
-        RentalID
-    ) REFERENCES Rental(RentalID),
-    FOREIGN KEY (
-        CarEquipmentID
-    ) REFERENCES DriverlessCar(EquipmentID)
+    FOREIGN KEY (RentalID) 
+        REFERENCES Rental(RentalID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    FOREIGN KEY (CarEquipmentID) 
+        REFERENCES DriverlessCar(EquipmentID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE Readiness(
@@ -229,12 +247,14 @@ CREATE TABLE Readiness(
     PRIMARY KEY (
         ReadinessID
     ),
-    FOREIGN KEY (
-        SupervisorSSN
-    ) REFERENCES Supervisor(SSN),
-    FOREIGN KEY (
-        RentalID
-    ) REFERENCES Rental(RentalID)
+    FOREIGN KEY (SupervisorSSN) 
+        REFERENCES Supervisor(SSN)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    FOREIGN KEY (RentalID) 
+        REFERENCES Rental(RentalID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE Reviews (
@@ -250,12 +270,14 @@ CREATE TABLE Reviews (
     UNIQUE (
         CustomerID, EquipmentID
     ),
-    FOREIGN KEY (
-        CustomerID
-    ) REFERENCES Customer(UserID),
-    FOREIGN KEY (
-        EquipmentID
-    ) REFERENCES Equipment(EquipmentID)
+    FOREIGN KEY (CustomerID) 
+        REFERENCES Customer(UserID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    FOREIGN KEY (EquipmentID) 
+        REFERENCES Equipment(EquipmentID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE Maintenance (
@@ -269,9 +291,11 @@ CREATE TABLE Maintenance (
     PRIMARY KEY (
         MaintenanceID
     ),
-    FOREIGN KEY (
-        EquipmentID
-    ) REFERENCES Equipment(EquipmentID)
+    FOREIGN KEY (EquipmentID) 
+        REFERENCES Equipment(EquipmentID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+        
 );
 
 CREATE TABLE SupportTicket (
@@ -286,12 +310,14 @@ CREATE TABLE SupportTicket (
     PRIMARY KEY (
         TicketID
     ),
-    FOREIGN KEY (
-        CustomerID
-    ) REFERENCES Customer(UserID),
-    FOREIGN KEY (
-        StaffSSN
-    ) REFERENCES Staff(SSN)
+    FOREIGN KEY (CustomerID) 
+        REFERENCES Customer(UserID)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    FOREIGN KEY (StaffSSN) 
+        REFERENCES Staff(SSN)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
 );
 
 CREATE TABLE Advertisement (
@@ -300,14 +326,16 @@ CREATE TABLE Advertisement (
     DatePublished           DATE,
     NumberOfViews           INT                 CHECK(NumberOfViews >= 0),
     ProductAdvertised       VARCHAR (30),
-    StaffSSN                VARCHAR (9)         NOT NULL,
+    StaffSSN                VARCHAR (9),
 
     PRIMARY KEY (
         AdID
     ),
-    FOREIGN KEY (
-        StaffSSN
-    ) REFERENCES Staff(SSN)
+    FOREIGN KEY (StaffSSN) 
+        REFERENCES Staff(SSN)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+        
 );
 
 CREATE TABLE CustomerViewsAdvertisement (
@@ -318,10 +346,12 @@ CREATE TABLE CustomerViewsAdvertisement (
         CustomerID,
         AdID
     ),
-    FOREIGN KEY (
-        CustomerID
-    ) REFERENCES Customer(UserID),
-    FOREIGN KEY (
-        AdID
-    ) REFERENCES Advertisement(AdID)
-)
+    FOREIGN KEY (CustomerID) 
+        REFERENCES Customer(UserID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (AdID) 
+        REFERENCES Advertisement(AdID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
