@@ -8,6 +8,7 @@ import Entity.Equipment;
 import java.time.LocalDate;
 import java.sql.*;
 import DataAccess.DatabaseConnection;
+import java.time.format.DateTimeParseException;
 
 public class RobotManager {
     private final ArrayList<Robot> robots = new ArrayList<>();
@@ -129,33 +130,59 @@ public class RobotManager {
             return false;
         }
         
+        String sql;
         switch (choice) {
             case 1:
-                robot.setStatus(newValue);
+                sql = "UPDATE Equipment SET Status = ? WHERE EquipmentID = ?";
                 break;
             case 2:
-                robot.setWarrantyExpDate(LocalDate.parse(newValue));
+                sql = "UPDATE Equipment SET WarrantyExpirationDate = ? WHERE EquipmentID = ?";
                 break;
             case 3:
-                robot.setFacilityId(Integer.parseInt(newValue));
+                sql = "UPDATE Equipment SET FacilityID = ? WHERE EquipmentID = ?";
                 break;
             case 4:
-                robot.setName(newValue);
+                sql = "UPDATE Robot SET Name = ? WHERE EquipmentID = ?";
                 break;
             case 5:
-                robot.setBatteryAutonomy(Integer.parseInt(newValue));
+                sql = "UPDATE Robot SET BatteryAutonomy = ? WHERE EquipmentID = ?";
                 break;
             case 6:
-                robot.setSensorSuite(newValue);
+                sql = "UPDATE Robot SET SensorSuite = ? WHERE EquipmentID = ?";
                 break;
             case 7:
-                robot.setPrimaryFunction(newValue);
+                sql = "UPDATE Robot SET PrimaryFunction = ? WHERE EquipmentID = ?";
                 break;
             default:
                 return false;
         }
 
-        return true;
+        PreparedStatement stmt = null;
+        try {
+            stmt = DatabaseConnection.conn.prepareStatement(sql);
+            stmt.setInt(2, id);
+
+            if (choice == 1 || choice == 4 || choice == 6 || choice == 7) {
+                stmt.setString(1, newValue);
+            } else if (choice == 3 || choice == 5) {
+                stmt.setInt(1, Integer.parseInt(newValue));
+            } else if (choice == 2) {
+                stmt.setString(1, LocalDate.parse(newValue).toString());
+            }
+            stmt.executeUpdate();
+            return true;
+
+        } catch (SQLException | NumberFormatException | DateTimeParseException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) { stmt.close(); }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return false;
     }
 
     public boolean deleteRobot(int id) {
