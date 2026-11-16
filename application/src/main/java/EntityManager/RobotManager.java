@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import Entity.Robot;
+import Entity.Equipment;
 import java.time.LocalDate;
 import java.sql.*;
 import DataAccess.DatabaseConnection;
@@ -15,12 +16,62 @@ public class RobotManager {
     public Robot addRobot(String serialNumber, String model, String status, int year, LocalDate warranty, 
         int facilityId, String name, int batteryAutonomy, String sensorSuite, String primaryFunction) {
 
-            Robot robot = new Robot(serialNumber, model, status, year, warranty, facilityId, name, batteryAutonomy, sensorSuite, primaryFunction);
+            String idSQL = "SELECT MAX(EquipmentID) FROM Equipment";
+            int equipmentId = 1;
 
-            robot.setEquipmentId(nextId++);
-            robots.add(robot);
+            PreparedStatement idStmt = null;
+            PreparedStatement equipmentStmt = null;
+            PreparedStatement robotStmt = null;
+            ResultSet rSet = null;
 
-            return robot;
+            try {
+                idStmt = DatabaseConnection.conn.prepareStatement(idSQL);
+                rSet = idStmt.executeQuery();
+                if (rSet.next()) {
+                    // grabs the highest id and increments by 1
+                    equipmentId = rSet.getInt(1) + 1;
+                }
+
+                String equipmentSQL = "INSERT INTO Equipment VALUES (?, ?, ?, ?, ?, ?, ?)";
+                equipmentStmt = DatabaseConnection.conn.prepareStatement(equipmentSQL);
+                equipmentStmt.setInt(1, equipmentId);
+                equipmentStmt.setString(2, serialNumber);
+                equipmentStmt.setString(3, model);
+                equipmentStmt.setString(4, status);
+                equipmentStmt.setInt(5, year);
+                equipmentStmt.setString(6, warranty.toString());
+                equipmentStmt.setInt(7, facilityId);
+
+                equipmentStmt.executeUpdate();
+
+                String robotSQL = "INSERT INTO Robot VALUES (?, ?, ?, ?, ?)";
+                robotStmt = DatabaseConnection.conn.prepareStatement(robotSQL);
+                robotStmt.setInt(1, equipmentId);
+                robotStmt.setString(2, name);
+                robotStmt.setInt(3, batteryAutonomy);
+                robotStmt.setString(4, sensorSuite);
+                robotStmt.setString(5, primaryFunction);
+
+                robotStmt.executeUpdate();
+
+                Robot robot = new Robot(serialNumber, model, status, year, warranty, facilityId, name, batteryAutonomy, sensorSuite, primaryFunction);
+                robot.setEquipmentId(equipmentId);
+                return robot;
+
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                try {
+                    if (rSet != null) { rSet.close(); }
+                    if (idStmt != null) { idStmt.close(); }
+                    if (equipmentStmt != null) { equipmentStmt.close(); }
+                    if (robotStmt != null) { robotStmt.close(); }
+
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            return null;
         }
 
     public Robot getRobotById(int id) {
