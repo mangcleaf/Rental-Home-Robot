@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import Entity.Robot;
 import java.time.LocalDate;
+import java.sql.*;
+import DataAccess.DatabaseConnection;
 
 public class RobotManager {
     private final ArrayList<Robot> robots = new ArrayList<>();
@@ -22,9 +24,48 @@ public class RobotManager {
         }
 
     public Robot getRobotById(int id) {
-        for (Robot robot: robots) {
-            if (robot.getEquipmentId() == id) {
+        String sql = "SELECT * FROM Equipment AS E" + 
+                    " JOIN Robot AS R ON E.EquipmentID = R.EquipmentID" + 
+                    " WHERE E.EquipmentID = ?";
+        
+        PreparedStatement stmt = null;
+        ResultSet rSet = null;
+        try {
+            stmt = DatabaseConnection.conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            rSet = stmt.executeQuery();
+
+            // only one row could be found
+            if (rSet.next()) {
+                String serialNumber = rSet.getString("SerialNumber");
+                String model = rSet.getString("Model");
+                String status = rSet.getString("Status");
+                int year = rSet.getInt("Year");
+
+                String warranty = rSet.getString("WarrantyExpirationDate");
+                LocalDate warrantyDate = null;
+                if (warranty != null) {
+                    warrantyDate = LocalDate.parse(warranty);
+                }
+                int facilityId = rSet.getInt("FacilityID");
+                String name = rSet.getString("Name");
+                int battery = rSet.getInt("BatteryAutonomy");
+                String sensorSuite = rSet.getString("SensorSuite");
+                String function = rSet.getString("PrimaryFunction");
+
+                Robot robot = new Robot(serialNumber, model, status, year, warrantyDate, facilityId, name, battery, sensorSuite, function);
+
+                robot.setEquipmentId(rSet.getInt("EquipmentID"));
                 return robot;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (rSet != null) { rSet.close(); }
+                if (stmt != null) { stmt.close(); }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
             }
         }
         return null;
