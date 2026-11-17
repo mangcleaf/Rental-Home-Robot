@@ -100,27 +100,48 @@ public class CustomerManager {
             return false;
         }
     
+        String sql;
         switch (choice) {
             case 1:
-                customer.setFirstName(newValue);
+                sql = "UPDATE Customer SET FirstName = ? WHERE UserID = ?";
                 break;
             case 2:
-                customer.setLastName(newValue);
+                sql = "UPDATE Customer SET LastName = ? WHERE UserID = ?";
                 break;
             case 3:
-                customer.setAddress(newValue);
+                sql = "UPDATE Customer SET Address = ? WHERE UserID = ?";
                 break;
             case 4:
-                customer.setPhone(newValue);
+                sql = "UPDATE Customer SET Phone = ? WHERE UserID = ?";
                 break;
             case 5:
-                customer.setEmail(newValue);
+                sql = "UPDATE Customer SET Email = ? WHERE UserID = ?";
                 break;
             default:
                 return false;
         }
+
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = DatabaseConnection.conn.prepareStatement(sql);
+            stmt.setString(1, newValue);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) { stmt.close(); }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     
-        return true;
+        return false;
     }
 
     public boolean deleteCustomer(int id){
