@@ -26,6 +26,7 @@ public class RobotManager {
                 if (rSet.next()) {
                     // grabs the highest id and increments by 1
                     equipmentId = rSet.getInt(1) + 1;
+                    
                 }
 
                 String equipmentSQL = "INSERT INTO Equipment VALUES (?, ?, ?, ?, ?, ?, ?)";
