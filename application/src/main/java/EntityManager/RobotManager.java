@@ -14,8 +14,7 @@ public class RobotManager {
     private final ArrayList<Robot> robots = new ArrayList<>();
     private int nextId = 1;
 
-    public Robot addRobot(String serialNumber, String model, String status, int year, LocalDate warranty, 
-        int facilityId, String name, int batteryAutonomy, String sensorSuite, String primaryFunction) {
+    public Robot addRobot(String serialNumber, String model, String status, int year, LocalDate warranty, int facilityId, String name, int batteryAutonomy, String sensorSuite, String primaryFunction) {
 
             String idSQL = "SELECT MAX(EquipmentID) FROM Equipment";
             int equipmentId = 1;
@@ -186,8 +185,45 @@ public class RobotManager {
     }
 
     public boolean deleteRobot(int id) {
-        return robots.removeIf(robot -> robot.getEquipmentId() == id);
+         Robot robot = getRobotById(id);
+
+        if (robot == null) {
+            return false;
+        }
+
+        String robotSQL = "DELETE FROM Robot WHERE EquipmentID = ?";
+        String equipmentSQL = "DELETE FROM Equipment WHERE EquipmentID = ?";
+
+        PreparedStatement robotStmt = null;
+        PreparedStatement equipmentStmt = null;
+
+        try {
+
+            // Robot depends on Equipment, so it must be deleted first
+            robotStmt = DatabaseConnection.conn.prepareStatement(robotSQL);
+            robotStmt.setInt(1, id);
+            robotStmt.executeUpdate();
+
+            equipmentStmt = DatabaseConnection.conn.prepareStatement(equipmentSQL);
+            equipmentStmt.setInt(1, id);
+            equipmentStmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (robotStmt != null) { robotStmt.close(); }
+                if (equipmentStmt != null) { equipmentStmt.close(); }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return false;
     }
+
 
     public List<Robot> getRobots() {
         return Collections.unmodifiableList(robots);
