@@ -105,7 +105,56 @@ public class CustomerManager {
     }
 
     public List<Customer> getCustomers() {
-        return Collections.unmodifiableList(customers);
+
+        List<Customer> customers = new ArrayList<>();
+
+        String sql = "SELECT * FROM Customer";
+
+        PreparedStatement stmt = null;
+        ResultSet rSet = null;
+
+        try {
+            stmt = DatabaseConnection.conn.prepareStatement(sql);
+
+            rSet = stmt.executeQuery();
+
+            while (rSet.next()) {
+
+                // building a customer object is the same as getCustomerById()
+                String first = rSet.getString("FirstName");
+                String last = rSet.getString("LastName");
+                String address = rSet.getString("Address");
+                String phone = rSet.getString("Phone");
+                String email = rSet.getString("Email");
+
+                String start = rSet.getString("StartDate");
+
+                LocalDate startDate = null;
+                if (start != null) {
+                    startDate = LocalDate.parse(start);
+                }
+
+                int facilityId = rSet.getInt("FacilityID");
+
+                Customer customer = new Customer(first, last, address, phone, email, startDate, facilityId);
+
+                customer.setUserId(rSet.getInt("UserID"));
+
+                customers.add(customer);
+            } 
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (rSet != null) { rSet.close(); }
+                if (stmt != null) { stmt.close(); }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return customers;
+
     }
     
 }
