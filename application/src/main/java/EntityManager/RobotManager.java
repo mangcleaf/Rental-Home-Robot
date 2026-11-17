@@ -1,18 +1,14 @@
 package EntityManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import Entity.Robot;
-import Entity.Equipment;
 import java.time.LocalDate;
 import java.sql.*;
 import DataAccess.DatabaseConnection;
 import java.time.format.DateTimeParseException;
 
 public class RobotManager {
-    private final ArrayList<Robot> robots = new ArrayList<>();
-    private int nextId = 1;
 
     public Robot addRobot(String serialNumber, String model, String status, int year, LocalDate warranty, int facilityId, String name, int batteryAutonomy, String sensorSuite, String primaryFunction) {
 
@@ -226,7 +222,57 @@ public class RobotManager {
 
 
     public List<Robot> getRobots() {
-        return Collections.unmodifiableList(robots);
+
+        List<Robot> robots = new ArrayList<>();
+        
+        String sql = "SELECT * FROM Equipment AS E" +
+                    " JOIN Robot AS R ON E.EquipmentID = R.EquipmentID";
+
+        PreparedStatement stmt = null;
+        ResultSet rSet = null;
+        
+        try {
+            stmt = DatabaseConnection.conn.prepareStatement(sql);
+            rSet = stmt.executeQuery();
+
+            while (rSet.next()) {
+                // building a Robot object is the same as getRobotById()
+                String serialNumber = rSet.getString("SerialNumber");
+                String model = rSet.getString("Model");
+                String status = rSet.getString("Status");
+                int year = rSet.getInt("Year");
+
+                String warranty = rSet.getString("WarrantyExpirationDate");
+                LocalDate warrantyDate = null;
+                if (warranty != null) {
+                    warrantyDate = LocalDate.parse(warranty);
+                }
+                int facilityId = rSet.getInt("FacilityID");
+                String name = rSet.getString("Name");
+                int battery = rSet.getInt("BatteryAutonomy");
+                String sensorSuite = rSet.getString("SensorSuite");
+                String function = rSet.getString("PrimaryFunction");
+
+                Robot robot = new Robot(serialNumber, model, status, year, warrantyDate, facilityId, name, battery, sensorSuite, function);
+
+                robot.setEquipmentId(rSet.getInt("EquipmentID"));
+
+                robots.add(robot);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (rSet != null) { rSet.close(); }
+                if (stmt != null) { stmt.close(); }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        return robots;
+        
     }
 
 
