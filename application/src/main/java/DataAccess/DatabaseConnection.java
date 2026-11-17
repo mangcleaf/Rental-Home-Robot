@@ -3,8 +3,7 @@ import java.sql.*;
 
 /* Very similar implementation used from GRS.java in Lab 3 */
 public class DatabaseConnection {
-    private static final String DB_URL =
-    "jdbc:sqlite:database/Rental-Home-Robot-CH4.db";
+    private static final String DB_URL = "jdbc:sqlite:../database/Rental-Home-Robot-CH4.db";
     public static Connection conn = null;
 
     

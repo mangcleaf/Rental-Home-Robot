@@ -154,7 +154,7 @@ public class CustomerMenu {
         System.out.println("Delete Customer");
         System.out.println("");
 
-        Integer id = readInt("Please enter Customer to delete: ");
+        Integer id = readInt("Please enter the Customer ID to delete: ");
 
         boolean deleteResult = customerManager.deleteCustomer(id);
 

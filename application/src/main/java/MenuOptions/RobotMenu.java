@@ -77,12 +77,29 @@ public class RobotMenu {
         System.out.print("Please Enter Primary Function: ");
         String primaryFunction = scanner.nextLine();
 
-        Robot robot = robotManager.addRobot(serialNumber, model, "Available", year, warrantyExpDate, facilityId, name, battery, sensorSuite, primaryFunction);
+        Robot robot = robotManager.addRobot(
+            serialNumber,
+            model,
+            "Available",
+            year,
+            warrantyExpDate,
+            facilityId,
+            name,
+            battery,
+            sensorSuite,
+            primaryFunction
+        );
 
         System.out.println("");
-        System.out.println("Robot Added!");
-        System.out.println("Robot ID: " + robot.getEquipmentId());
-        
+
+        if (robot != null) {
+            System.out.println("Robot added successfully!");
+            System.out.println("Robot ID: " + robot.getEquipmentId());
+        } else {
+            System.out.println("Error adding robot.");
+            System.out.println("Please check that the Model and Facility ID exist in the database.");
+        }
+
         pause();
     }
 
