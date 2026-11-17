@@ -145,7 +145,36 @@ public class CustomerManager {
     }
 
     public boolean deleteCustomer(int id){
-        return customers.removeIf(customer -> customer.getUserId() == id);
+        Customer customer = getCustomerById(id);
+
+        if (customer == null) {
+            return false;
+        }
+
+        String sql = "DELETE FROM Customer WHERE UserID = ?";
+
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = DatabaseConnection.conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            stmt.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) { stmt.close(); }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return false;
+
     }
 
     public Customer getCustomerById(int id){
