@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import MenuOptions.ReportsMenu;
 
 import EntityManager.CustomerManager;
 import EntityManager.RobotManager;
@@ -83,8 +84,8 @@ public class MainMenu {
                     rentalMenu.display();
                     break;
                 case 5:
-                    System.out.println("** This section will be implemented later **");
-                    pause();
+                    ReportsMenu reportsMenu = new ReportsMenu(scanner);
+                    reportsMenu.display();
                     break;
                 case 0:
                     System.out.println("");
