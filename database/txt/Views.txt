@@ -6,7 +6,7 @@ Business justification: Allow for comparison between the models of robots, based
 
 Relational algebra:
 
-R1 <- (((EquipmentModel NATURAL JOIN Equipment) NATURAL JOIN Robot) JOIN{Robot.EquipmentID=Rental.RobotEquipmentID} Rental)
+R1 <- (((EquipmentModel NATURAL JOIN Equipment) NATURAL JOIN Robot) JOIN{Robot.EquipmentID=Rental.RobotEquipmentID} Rentals)
 
 R2(Model, TotalRentals) <- Model COUNT(RentalID) R1
 
@@ -25,7 +25,7 @@ SELECT em.Model, COUNT(r.RentalID) AS TotalRentals, SUM(r.RentalFees) AS TotalRe
 FROM EquipmentModel AS em
 JOIN Equipment AS e ON e.Model = em.Model
 JOIN Robot AS rb ON rb.EquipmentID = e.EquipmentID
-JOIN Rental AS r ON r.RobotEquipmentID = rb.EquipmentID
+JOIN Rentals AS r ON r.RobotEquipmentID = rb.EquipmentID
 GROUP BY em.Model
 ORDER BY TotalRentals DESC;
 _____________________________________________________________________________________________________________________________________________________________
@@ -38,7 +38,7 @@ Business justification: Shows who are the companies most lucrative customers.
 
 Relational algebra:
 
-R1 <- Customer JOIN{Customer.UserID=Rental.CustomerID} Rental
+R1 <- Customer JOIN{Customer.UserID=Rental.CustomerID} Rentals
 
 R2(UserId, FirstName, LastName, TotalRentals) <- UserId, FirstName, LastName COUNT(RentalID) R1
 
@@ -53,6 +53,6 @@ SQL:
 CREATE VIEW PerCustomerView AS
 SELECT c.UserID, c.FirstName, c.LastName, COUNT(r.RentalID) AS RentalCount, SUM(r.RentalFees) AS TotalRentalFees, AVG(r.RentalFees) AS AverageRentalFee
 FROM Customer AS c
-JOIN Rental AS r ON r.CustomerID = c.UserID
+JOIN Rentals AS r ON r.CustomerID = c.UserID
 GROUP BY c.UserID
 ORDER BY RentalCount DESC;

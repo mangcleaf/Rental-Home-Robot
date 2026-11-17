@@ -33,6 +33,75 @@ public class RentalMenu {
         }
     }
 
+
+    private void rentRobot() {
+        clearConsole();
+
+        System.out.println("Rent Robot");
+        System.out.println("");
+
+        Integer customerID = readInt("Please enter Customer ID: ");
+        Integer robotID = readInt("Please enter Robot Equipment ID: ");
+
+        System.out.print("Please enter Checkout Date (YYYY-MM-DD): ");
+        String checkoutDate = scanner.nextLine();
+
+        System.out.print("Please enter Due Date (YYYY-MM-DD): ");
+        String dueDate = scanner.nextLine();
+
+        System.out.println("");
+        System.out.println("Rental information entered successfully!");
+        System.out.println("Customer ID: " + customerID);
+        System.out.println("Robot ID: " + robotID);
+        System.out.println("Checkout Date: " + checkoutDate);
+        System.out.println("Due Date: " + dueDate);
+    }
+
+    private void returnEquipment() {
+        clearConsole();
+
+        System.out.println("Return Equipment");
+        System.out.println("");
+
+        Integer customerID = readInt("Please enter Customer ID: ");
+        Integer rentalID = readInt("Please enter Rental ID: ");
+
+        System.out.print("Please enter Return Date (YYYY-MM-DD): ");
+        String returnDate = scanner.nextLine();
+
+        System.out.println("");
+        System.out.println("Return information entered successfully!");
+        System.out.println("Customer ID: " + customerID);
+        System.out.println("Rental ID: " + rentalID);
+        System.out.println("Return Date: " + returnDate);
+    }
+
+    private void scheduleDelivery() {
+        clearConsole();
+
+        System.out.println("Schedule Robot Delivery");
+        System.out.println("");
+
+        Integer customerID = readInt("Please enter Customer ID: ");
+        Integer rentalID = readInt("Please enter Rental ID: ");
+        Integer carID = readInt("Please enter Driverless Car Equipment ID: ");
+
+        System.out.print("Please enter Delivery Date (YYYY-MM-DD): ");
+        String deliveryDate = scanner.nextLine();
+
+        System.out.print("Please enter Delivery Time (HH:MM): ");
+        String deliveryTime = scanner.nextLine();
+
+        System.out.println("");
+        System.out.println("Delivery information entered successfully!");
+        System.out.println("Customer ID: " + customerID);
+        System.out.println("Rental ID: " + rentalID);
+        System.out.println("Car Equipment ID: " + carID);
+        System.out.println("Delivery Date: " + deliveryDate);
+        System.out.println("Delivery Time: " + deliveryTime);
+    }
+
+
     private void schedulePickup(){
         clearConsole();
 
@@ -86,27 +155,37 @@ public class RentalMenu {
             
             Integer choice = readInt("Please enter your choice: ");
 
+            
             switch (choice) {
                 case 1:
-                    System.out.println("Rent Robot Under Development");
+                    rentRobot();
                     pause();
                     break;
+
                 case 2:
-                    System.out.println("Return Equipment Under Development");
+                    returnEquipment();
                     pause();
                     break;
+
                 case 3:
-                    System.out.println("Schedule Delivery Under Development");
+                    scheduleDelivery();
                     pause();
                     break;
+
                 case 4:
                     schedulePickup();
+                    pause();
                     break;
-                case 0: 
+
+                case 0:
                     return;
+
                 default:
+                    System.out.println("Invalid selection.");
+                    pause();
                     break;
             }
+
         }
     }
 }

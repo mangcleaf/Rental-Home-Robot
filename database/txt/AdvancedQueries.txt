@@ -1,0 +1,150 @@
+-- Query 10: List customer names and the total number of robots they have rented. 
+
+SELECT FirstName, LastName, COUNT(RentalID) AS TotalRobots
+FROM Customer
+JOIN Rentals ON Customer.UserID = Rentals.CustomerID
+GROUP BY Customer.UserID;
+
+
+-- Query 11: List customer names and email address for those who have rented more robots than the average customer.
+
+SELECT FirstName, LastName, Email
+FROM Customer
+JOIN (
+    SELECT CustomerID, COUNT(RentalID) AS TotalRobots
+    FROM Rentals
+    GROUP BY CustomerID
+) AS TotalRobotsRented ON Customer.UserID = TotalRobotsRented.CustomerID
+WHERE TotalRobots > (
+    SELECT AVG (TotalRobots)
+    FROM (
+        SELECT COUNT(RentalID) AS TotalRobots
+        FROM Rentals
+        GROUP BY CustomerID
+    )
+);
+
+
+-- Query 12: List the robots and the number of times it was rented, in descending order by number of rentals. 
+
+SELECT RobotEquipmentID, COUNT(RentalID) AS TotalRentals
+FROM Rentals
+GROUP BY CustomerID
+ORDER BY TotalRentals DESC;
+
+-- Query 13: List the driverless cars and the total number of miles driven, in descending order by number of robots each driverless car delivered. 
+
+SELECT CarDeliveries.CarEquipmentID, TotalMiles, TotalDeliveries
+FROM (
+    SELECT CarEquipmentID, COUNT(DeliveryPickupID) AS TotalDeliveries
+    FROM DeliveryPickup
+    WHERE Type = "Delivery"
+    GROUP BY CarEquipmentID
+) AS CarDeliveries
+JOIN (
+    SELECT DeliveryPickup.CarEquipmentID, SUM(FacilityDistance) AS TotalMiles
+    FROM Customer
+    JOIN Rentals ON Customer.UserID = Rentals.CustomerID
+    JOIN DeliveryPickup ON Rentals.RentalID = DeliveryPickup.RentalID
+    JOIN CustomerFacilityDistance ON (Customer.Address = CustomerFacilityDistance.Address AND Customer.FacilityID = CustomerFacilityDistance.FacilityID)
+    WHERE DeliveryPickup.Type = "Delivery"
+    GROUP BY DeliveryPickup.CarEquipmentID
+) AS DeliveryMiles ON CarDeliveries.CarEquipmentID = DeliveryMiles.CarEquipmentID
+ORDER BY TotalDeliveries DESC;
+
+
+-- Query 14: Return the manufacturer who has the most robots rented. 
+
+SELECT ManufacturerRentals.Manufacturer
+FROM (
+    SELECT EquipmentModel.Manufacturer, COUNT(RentalID) AS TotalRentals
+    FROM Rentals
+    JOIN Equipment ON RobotEquipmentID = EquipmentID
+    JOIN EquipmentModel ON Equipment.Model = EquipmentModel.Model
+    GROUP BY Manufacturer  
+) AS ManufacturerRentals
+JOIN (
+    SELECT MAX(TotalRentals) AS MaxTotal
+    FROM (
+        SELECT EquipmentModel.Manufacturer, COUNT(RentalID) AS TotalRentals
+        FROM Rentals
+        JOIN Equipment ON RobotEquipmentID = EquipmentID
+        JOIN EquipmentModel ON Equipment.Model = EquipmentModel.Model
+        GROUP BY Manufacturer
+    ) AS ManufacturerRentals
+) AS MaxRentals
+WHERE TotalRentals = MaxTotal;
+
+
+-- Query 15: List robot’s time it was rented out and number of rentals the robot had, in descending order by time it was rented out. 
+
+SELECT TotalDaysRobotRented.RobotEquipmentID, TotalDays, TotalRentals
+FROM (
+    Select RobotEquipmentID, SUM (DaysRented) AS TotalDays
+    FROM (
+        SELECT RentalID, RobotEquipmentID, (ReturnDate-CheckoutDate) AS DaysRented
+        FROM Rentals
+    ) AS RobotRental
+    GROUP BY RobotEquipmentID
+) AS TotalDaysRobotRented
+JOIN (
+    SELECT RobotEquipmentID, COUNT (RentalID) AS TotalRentals
+    FROM Rentals
+    GROUP BY RobotEquipmentID
+) AS NumberOfRentals ON TotalDaysRobotRented.RobotEquipmentID = NumberOfRentals.RobotEquipmentID
+ORDER BY TotalDays DESC;
+
+
+-- Query 16: List the names and phone numbers of customers who didn't rent the most demanded robot.
+
+SELECT FirstName, LastName, Phone
+FROM Customer
+WHERE UserID NOT IN (
+    Select CustomerID
+    From Rentals
+    Where RobotEquipmentID IN (
+        SELECT RobotRentals.RobotEquipmentID
+        FROM (
+            SELECT RobotEquipmentID, COUNT(RentalID) AS TotalRentals
+            FROM Rentals
+            GROUP BY RobotEquipmentID
+        ) AS RobotRentals
+        JOIN (
+            SELECT MAX(TotalRentals) AS MaxTotal
+            FROM (
+                SELECT RobotEquipmentID, COUNT(RentalID) AS TotalRentals
+                FROM Rentals
+                GROUP BY RobotEquipmentID
+            ) AS RentalCounts
+        ) AS MaxRentals
+        ON RobotRentals.TotalRentals = MaxRentals.MaxTotal
+    )
+);
+
+
+-- Query 17: List the manufacturers who provide the robots rented out by customers who rented more than the average customer. 
+
+SELECT DISTINCT Manufacturer
+FROM Rentals
+JOIN (
+    SELECT CustomerRentals.CustomerID
+    FROM (
+        SELECT CustomerID, COUNT (RentalID) AS TotalRentals
+        FROM Rentals
+        GROUP BY CustomerID
+    ) AS CustomerRentals
+    CROSS JOIN (
+        SELECT AVG (TotalRentals) AS AvgRentals
+        FROM (
+            SELECT CustomerID, COUNT (RentalID) AS TotalRentals
+            FROM Rentals
+            GROUP BY CustomerID
+        ) AS RentalCounts
+    ) AS AverageRentals
+    WHERE CustomerRentals.TotalRentals > AverageRentals.AvgRentals
+) AS AboveAvg ON Rentals.CustomerID = AboveAvg.CustomerID
+JOIN Equipment ON Rentals.RobotEquipmentID = Equipment.EquipmentID
+JOIN EquipmentModel ON Equipment.Model = EquipmentModel.Model;
+
+
+

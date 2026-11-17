@@ -10,7 +10,7 @@
 .import --skip 1 "Staff.csv" Staff
 .import --skip 1 "Supervisor.csv" Supervisor
 .import --skip 1 "Manager.csv" Manager
-.import --skip 1 "Rental.csv" Rental
+.import --skip 1 "Rentals.csv" Rentals
 .import --skip 1 "FacilityOrders.csv" FacilityOrders
 .import --skip 1 "OrderItems.csv" OrderItems
 .import --skip 1 "DeliveryPickup.csv" DeliveryPickup

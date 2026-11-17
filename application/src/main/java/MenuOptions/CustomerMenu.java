@@ -39,6 +39,18 @@ public class CustomerMenu {
         }
     }
 
+    private double readDouble(String prompt) {
+        while (true) {
+            System.out.println(prompt);
+
+            try {
+                return Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number. Try again.");
+            }
+        }
+    }
+
     private void addCustomerMenu(){
         clearConsole();
 
@@ -64,7 +76,9 @@ public class CustomerMenu {
 
         LocalDate startDate = LocalDate.now();
 
-        Customer customer = customerManager.addCustomer(fName, lName, address, phone, email, startDate, facilityId);
+        double facilityDistance = readDouble("Please enter customer's distance to the nearest facility: ");
+
+        Customer customer = customerManager.addCustomer(fName, lName, address, phone, email, startDate, facilityId, facilityDistance);
 
         System.out.println("");
         System.out.println("Customer Added!!!");
@@ -140,7 +154,7 @@ public class CustomerMenu {
         System.out.println("Delete Customer");
         System.out.println("");
 
-        Integer id = readInt("Please enter Customer to delete: ");
+        Integer id = readInt("Please enter the Customer ID to delete: ");
 
         boolean deleteResult = customerManager.deleteCustomer(id);
 
